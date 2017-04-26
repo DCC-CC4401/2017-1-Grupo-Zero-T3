@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> Ficha del Producto </title>
+
+    <!-- import bootstrap -->
+    <!-- Latest compiled and minified CSS ->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) ->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript ->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+
+    <!-- import Materialize -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+        $('#textarea1').val('New Text');
+        $('#textarea1').trigger('autoresize');
+    </script>
+
+</head>
+<body class="cyan">
+<nav>
+    <div class="nav-wrapper light-blue darken-4">
+        <a href="#" class="brand-logo left">App</a>
+        <ul id="nav-mobile" class="right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="row"><br><br></div>
+
+<div class="container">
+
+    <div class="row">
+        <form action="#" class="input-field in-line">
+        <div class="col s12 l6 center ">
+            <br>
+
+            <img class="circle responsive-img" src="itemplaceholder.jpg">
+            <br>
+            <div class="file-field input-field">
+                <div class="btn light-blue darken-4">
+                    <span>Cambiar Fotografía</span>
+                    <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col s12 l6 center light-blue darken-4 white-text flow-text">
+            <br>
+            <div class="row">
+                <div class="col s6 right-align">
+                    Nombre:
+                </div>
+                <div class="col s6 left-align">
+                    <input type="text" value="Fajita Vegana">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 right-align">
+                    Price:
+                </div>
+                <div class="col s6 left-align">
+                    <input type="text" value="2.990">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 right-align">
+                    Stock:
+                </div>
+                <div class="col s6 left-align">
+                    <input type="number" value="20">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 right-align">
+                    Categoría:
+                </div>
+                <div class="input-field in-line col s6 left-align">
+                    <select>
+                        <option value="1" selected>Fajitas</option>
+                        <option value="2">Hamburguesas</option>
+                        <option value="3">Ensaladas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 right-align ">
+                    Descripción:
+                </div>
+                <div class="col s6 left-align">
+                    <textarea id="textarea1" class="materialize-textarea">"blahblah blah blah bl ahb la hbl ahb lahb la hbla hbl ahb lah bl ahbla hbla hblah blahbl ahbla hblah"</textarea>
+
+                </div>
+            </div>
+
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

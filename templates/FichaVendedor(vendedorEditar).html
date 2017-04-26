@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> Ficha Vendedor (vista alumno) </title>
+
+    <!-- import Materialize -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+    </script>
+
+</head>
+<body class="">
+
+<div class="row"><br><br></div>
+
+<div class="container">
+    <div class="row">
+        <!-- primera columna, foto e información -->
+        <div class="col s12 l5 center blue-grey lighten-5 white-tex">
+            <br>
+            <form action="shuoebki">
+
+                <div class="row">
+                    <img class="responsive-img circle" src="/static/app/placeholder2.png">
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        Nombre:
+                    </div>
+                    <div class="col s8 offset-s2">
+                        <input type="text" name="nombre" id="nombre" value="Juan Perez">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        Formas de pago:
+                    </div>
+                    <div class="col s8 offset-s2 left-align">
+                    <span>
+                        <input type="checkbox" name="efectivo" id="check1" checked>
+                        <label for="check1" class="black-text">Efectivo</label>
+                    </span><br>
+                        <span>
+                        <input type="checkbox" name="debito" id="check2">
+                        <label for="check2" class="black-text">Tarjeta de Debito</label>
+                    </span><br>
+                        <span>
+                        <input type="checkbox" name="credito" id="check3">
+                        <label for="check3" class="black-text">Tarjeta de Credito</label>
+                    </span><br>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col s12">
+                        Horario de atención:
+                    </div>
+                    <div class="input-field col s4 offset-s2 input-field">
+                        <select name="apertura">
+                            <option value="0">10:00</option>
+                            <option value="1">11:00</option>
+                            <option value="2">12:00</option>
+                            <option value="3">13:00</option>
+                            <option value="4" selected>14:00</option>
+                            <option value="5">15:00</option>
+                            <option value="6">16:00</option>
+                            <option value="7">17:00</option>
+                            <option value="8">18:00</option>
+                            <option value="9">19:00</option>
+                            <option value="10">20:00</option>
+                            <option value="11">21:00</option>
+                            <option value="12">22:00</option>
+                        </select>
+                        <label>Apertura</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <select name="clausura">
+                            <option value="0">10:00</option>
+                            <option value="1">11:00</option>
+                            <option value="2">12:00</option>
+                            <option value="3">13:00</option>
+                            <option value="4">14:00</option>
+                            <option value="5">15:00</option>
+                            <option value="6">16:00</option>
+                            <option value="7">17:00</option>
+                            <option value="8">18:00</option>
+                            <option value="9">19:00</option>
+                            <option value="10">20:00</option>
+                            <option value="11">21:00</option>
+                            <option value="12" selected>22:00</option>
+                        </select>
+                        <label>Clausura</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <input type="submit" class="btn green" value="Guardar">
+                </div>
+            </form>
+        </div>
+
+
+        <!-- segunda columna, menú -->
+        <div class="col s12 l7">
+            <h1 class="header center">Menú</h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>
