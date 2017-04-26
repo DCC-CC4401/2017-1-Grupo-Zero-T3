@@ -23,45 +23,56 @@
     </script>
 
 </head>
-<body class="cyan">
+<body class="">
 
 <div class="row"><br><br></div>
 
 <div class="container">
     <div class="row">
         <!-- primera columna, foto e información -->
-        <div class="col s12 l6 center light-blue darken-4 white-text">
+        <div class="col s12 l5 center blue-grey lighten-5 white-tex">
             <br>
-            <form action="shuoebki" class="input-field">
-
-                <img class="responsive-img" src="/static/app/placeholder2.png">
-
-                <div class="row">Juan Perez</div>
+            <form action="shuoebki">
 
                 <div class="row">
-                    <div class="col s6 right-align">
-                        Formas de pago:<br>
+                    <img class="responsive-img" src="/static/app/placeholder2.png">
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        Nombre:
                     </div>
-                    <div class="col s6 left-align">
+                    <div class="col s8 offset-s2">
+                        <input type="text" name="nombre" id="nombre" value="Juan Perez">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        Formas de pago:
+                    </div>
+                    <div class="col s8 offset-s2 left-align">
                     <span>
                         <input type="checkbox" name="efectivo" id="check1" checked>
-                        <label for="check1" class="white-text">Efectivo</label>
+                        <label for="check1" class="black-text">Efectivo</label>
                     </span><br>
                         <span>
                         <input type="checkbox" name="debito" id="check2">
-                        <label for="check2" class="white-text">Tarjeta de Debito</label>
+                        <label for="check2" class="black-text">Tarjeta de Debito</label>
                     </span><br>
                         <span>
                         <input type="checkbox" name="credito" id="check3">
-                        <label for="check3" class="white-text">Tarjeta de Credito</label>
+                        <label for="check3" class="black-text">Tarjeta de Credito</label>
                     </span><br>
                     </div>
                 </div>
                 <br>
 
                 <div class="row">
-                    <span class="col s12"> Horario de atención:<br> </span>
-                    <div class="input-field col s4 offset-s2">
+                    <div class="col s12">
+                        Horario de atención:
+                    </div>
+                    <div class="input-field col s4 offset-s2 input-field">
                         <select name="apertura">
                             <option value="0">10:00</option>
                             <option value="1">11:00</option>
@@ -99,14 +110,14 @@
                     </div>
                 </div>
 
-                <input type="submit" class="btn green" value="Editar">
+                <input type="submit" class="btn green" value="Guardar">
                 <br><br>
             </form>
         </div>
 
 
         <!-- segunda columna, menú -->
-        <div class="col s12 l6">
+        <div class="col s12 l7">
             <h1 class="header center">Menú</h1>
         </div>
     </div>
