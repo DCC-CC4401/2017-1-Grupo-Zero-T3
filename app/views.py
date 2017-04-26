@@ -20,5 +20,9 @@ def vendedorV(request):
     return render(request, "FichaVendedor(vendedor).html")
 
 
-def vendedorVE(request):
-    return render(request, "FichaVendedor(vendedorEditar).html")
+def producto(request):
+    return render(request, "FichaProducto.html")
+
+
+def productoV(request):
+    return render(request, "FichaProductoVendedor.html")

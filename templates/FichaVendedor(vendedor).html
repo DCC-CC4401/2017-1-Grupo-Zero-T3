@@ -17,16 +17,35 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
-<body class="cyan">
+<body class="">
 
-<div class="row"><br><br></div>
+<nav>
+    <div class="nav-wrapper light-blue darken-4">
+        <a href="#" class="brand-logo left">App</a>
+        <ul id="nav-mobile" class="right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row"></div>
 
 <div class="container">
     <div class="row">
         <!-- primera columna, foto e información -->
         <div class="col s12 l5 center light-blue darken-4 white-text flow-tex">
-            <br>
-            <img class="responsive-img circle" src="/static/app/placeholder2.png">
+
+            <div class="row"></div>
+
+            <div class="row">
+                <img class="responsive-img circle col s8 offset-s2" src="/static/app/iconoUsuario.png">
+                <div class="row right-align col s2">
+                    <a class="btn-floating">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </div>
+            </div>
 
             <div class="row">Juan Perez</div>
 
@@ -45,10 +64,6 @@
 
             <div class="row">
                 Favorito de: 14
-            </div>
-
-            <div class="row">
-                <input type="submit" class="btn blue" value="Editar">
             </div>
         </div>
 
