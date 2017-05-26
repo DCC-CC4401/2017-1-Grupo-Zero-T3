@@ -12,4 +12,3 @@ def login(request):
 
 def signup(request):
     return render(request, "app/signup.html")
-z
