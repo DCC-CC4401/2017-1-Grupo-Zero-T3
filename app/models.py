@@ -38,7 +38,7 @@ class FormasDePago(models.Model):
         return (cred + deb + efec + jun)[:-2]
 
 
-class VendedorAmbulante(models.Model):
+class Vendedor(models.Model):
     user = models.OneToOneField(User, on_delete="cascade")
     formas_de_pago = models.OneToOneField(FormasDePago, on_delete="cascade")
 
@@ -46,27 +46,43 @@ class VendedorAmbulante(models.Model):
         ordering = ["user.username"]
 
     def __str__(self):
-        return "Vendedor Ambulante: " + self.user.username + ", " + self.user.email
+        return self.user.username + ", " + self.user.email
 
     def pagos(self):
         return str(self.formas_de_pago)
 
 
+class VendedorAmbulante(models.Model):
+    vendedor = models.OneToOneField(Vendedor, on_delete="cascade")
+
+    def __str__(self):
+        return "Vendedor Ambulante: " + str(self.vendedor)
+
+    def pagos(self):
+        return self.vendedor.pagos()
+
+
 class VendedorFijo(models.Model):
-    user = models.OneToOneField(User, on_delete="cascade")
-    formas_de_pago = models.OneToOneField(FormasDePago, on_delete="cascade")
+    vendedor = models.OneToOneField(Vendedor, on_delete="cascade")
 
     hora_apertura = models.IntegerField()
     hora_clausura = models.IntegerField()
     ubicacion = models.CharField(max_length=60)
 
+    def __str__(self):
+        return "Vendedor Ambulante: " + str(self.vendedor)
+
+    def pagos(self):
+        return self.vendedor.pagos()
+
     class Meta:
         ordering = ["user.username"]
 
-    def __str__(self):
-        return "Vendedor Fijo: " + self.user.username + ", " + self.user.email
 
-    def pagos(self):
-        return str(self.formas_de_pago)
-
+class Producto(models.Model):
+    vendedor = models.OneToOneField(Vendedor)
+    nombre = models.CharField(max_length=60)
+    descripcion = models.CharField(max_length=60)
+    precio = models.IntegerField(max_length=60)
+    stock = models.IntegerField()
 
