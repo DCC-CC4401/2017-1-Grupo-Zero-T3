@@ -36,6 +36,8 @@ class Vendedor(models.Model):
     efectivo = models.BooleanField(default=False)
     JUNAEB = models.BooleanField(default=False)
 
+    activo = models.BooleanField()
+
     class Meta:
         ordering = ["user"]
 
@@ -83,6 +85,11 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=60)
     precio = models.IntegerField()
     stock = models.IntegerField()
+
+    categorias = (
+        ()
+    )
+    categoria = models.CharField(choices=categorias, max_length=60, null=True)
 
     class Meta:
         ordering = ["vendedor", "nombre"]

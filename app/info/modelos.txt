@@ -6,11 +6,11 @@ User(username: VARCHAR, password: VARCHAR, email: VARCHAR, firstname: VARCHAR, l
 Admin(user: User, foto: Image)
 Alumno(user: User, foto: Image)
 
-Vendedor(user: User, foto: Image, credito: BOOLEAN, debito: BOOLEAN, efectivo: BOOLEAN, JUNAEB: BOOLEAN)
+Vendedor(user: User, foto: Image, credito: BOOLEAN, debito: BOOLEAN, efectivo: BOOLEAN, JUNAEB: BOOLEAN, activo: BOOLEAN)
 
 VendedorAmbulante(vendedor: Vendedor)
 VendedorFijo(vendedor: Vendedor, hora_apertura: INTEGER, hora_clausura: INTEGER, ubicacion: VARCHAR)
 
-Producto(vendedor: Vendedor, foto: Image, nombre: VARCHAR, descripcion: VARCHAR, precio: INTEGER, stock: INTEGER)
+Producto(vendedor: Vendedor, foto: Image, nombre: VARCHAR, descripcion: VARCHAR, precio: INTEGER, stock: INTEGER, categoria: VARCHAR)
 
 Favorito(alumno: Alumno, vendedor: Vendedor)
