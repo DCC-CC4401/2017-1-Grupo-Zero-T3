@@ -9,6 +9,7 @@ class VendedorAmbulanteForm(forms.Form):
     password = forms.CharField(label="password", widget=forms.PasswordInput(render_value = True))
     password2 = forms.CharField(label="password2", widget=forms.PasswordInput(render_value = True))
     email = forms.CharField(label="email", widget=forms.EmailInput(attrs={'class':'validate'}))
+    file = forms.FileField()
     CHOICES=(('Credito','Credito'),
              ('Debito','Debito'),
              ('Efectivo','Efectivo'),
@@ -53,3 +54,4 @@ class AlumnoForm(forms.Form):
     password = forms.CharField(label="password", widget=forms.PasswordInput(render_value = True))
     password2 = forms.CharField(label="password2", widget=forms.PasswordInput(render_value = True))
     email = forms.CharField(label="email", widget=forms.EmailInput(attrs={'class':'validate'}))
+    file = forms.FileField()

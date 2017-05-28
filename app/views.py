@@ -116,7 +116,7 @@ def registrarAmbulante(request):
     if request.method == 'POST':
 
         # create a form instance and populate it with data from the request:
-        form = VendedorAmbulanteForm(request.POST)
+        form = VendedorAmbulanteForm(request.POST, request.FILES)
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
@@ -124,9 +124,10 @@ def registrarAmbulante(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
+            imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=2)
+            vendedor=Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=2)
             vendedor.save()
             vendedorambulante=VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
@@ -146,7 +147,7 @@ def registrarAlumno(request):
     if request.method == 'POST':
 
         # create a form instance and populate it with data from the request:
-        form = AlumnoForm(request.POST)
+        form = AlumnoForm(request.POST, request.FILES)
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
@@ -155,9 +156,10 @@ def registrarAlumno(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
+            imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            alumno=Alumno(user=user, foto=0)
+            alumno=Alumno(user=user, foto=imagen)
             alumno.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')

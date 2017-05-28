@@ -43,6 +43,39 @@ $(document).ready(function() {
               </div>
             </div>
 
+              <div>
+                  Cambiar avatar:
+              </div>
+
+              {{ form.file.errors }}
+              {{ form.file }}
+
+              <!--div class="col s9">
+                  <div class="dropify-wrapper touch-fallback">
+                      <div class="dropify-message">
+                          <p class="center">
+                              <i class="material-icons center">mdi_file_cloud_upload</i>
+                          </p>
+                          <p class="center">Arrastre y suelte un archivo aquí o haga click</p>
+                          <p class="dropify-error center">Sorry, this file is too large</p>
+                      </div>
+
+                      <input  type="file" name="myfile" id="input-file-now" class="dropify" data-default-file="">
+
+                      <button type="button" class="dropify-clear">Remove</button>
+
+                      <div class="dropify-preview"><span class="dropify-render"></span>
+                          <div class="dropify-infos">
+                              <div class="dropify-infos-inner">
+                                  <p class="dropify-filename">
+                                      <span class="dropify-filename-inner"></span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div-->
+
             <div class='row'>
               <div class='input-field col s12 m12'>
                   {{ form.password.errors }}
