@@ -16,6 +16,7 @@ def login(request):
 def signup(request):
     return render(request, "app/signupFijo.html")
 
+
 def TipoUsuario(request):
     return render(request, "app/TipoUsuario.html")
 
@@ -45,13 +46,14 @@ def vendedorprofilepage(request, id):
         pagos.append("JUNAEB")
     context["pagos"] = pagos
     context["tipo"] = (v.tipo == 1)
+    context["foto"] = v.foto
 
     if context["tipo"]:
         vf = VendedorFijo.objects.get(vendedor=v)
         h = vf.hora_apertura
-        context["apertura"] = str(int(h/100)) + ":" + str(h%100)
+        context["apertura"] = str(int(h / 100)) + ":" + str(h % 100)
         h = vf.hora_clausura
-        context["clausura"] = str(int(h/100)) + ":" + str(h%100)
+        context["clausura"] = str(int(h / 100)) + ":" + str(h % 100)
 
     context["fav"] = len(Favorito.objects.filter(vendedor=v))
     context["productos"] = Producto.objects.filter(vendedor=v)
@@ -64,6 +66,7 @@ def vendedorprofilepage(request, id):
 
     return render(request, "app/vendedor-profile-page.html", context)
 
+
 def registrarFijo(request):
     # if this is a POST request we need to process the form data
 
@@ -74,18 +77,19 @@ def registrarFijo(request):
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
-
             # process the data in form.cleaned_data as required
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
-            hora_apertura=form.cleaned_data['hora_apertura']
-            hora_clausura=form.cleaned_data['hora_clausura']
+            hora_apertura = form.cleaned_data['hora_apertura']
+            hora_clausura = form.cleaned_data['hora_clausura']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=1)
+            vendedor = Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True,
+                                tipo=1)
             vendedor.save()
-            vendedorfijo=VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura, ubicacion='')
+            vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
+                                        ubicacion='')
             vendedorfijo.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
@@ -95,6 +99,7 @@ def registrarFijo(request):
         form = VendedorFijoForm()
 
     return render(request, 'app/signupFijo.html', {'form': form})
+
 
 def registrarAmbulante(request):
     # if this is a POST request we need to process the form data
@@ -106,16 +111,16 @@ def registrarAmbulante(request):
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
-
             # process the data in form.cleaned_data as required
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=2)
+            vendedor = Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True,
+                                tipo=2)
             vendedor.save()
-            vendedorambulante=VendedorAmbulante(vendedor=vendedor)
+            vendedorambulante = VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
@@ -125,6 +130,7 @@ def registrarAmbulante(request):
         form = VendedorAmbulanteForm()
 
     return render(request, 'app/signupAmbulante.html', {'form': form})
+
 
 def registrarAlumno(request):
     # if this is a POST request we need to process the form data
@@ -136,14 +142,13 @@ def registrarAlumno(request):
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
-
             # process the data in form.cleaned_data as required
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            alumno=Alumno(user=user, foto=0)
+            alumno = Alumno(user=user, foto=0)
             alumno.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')

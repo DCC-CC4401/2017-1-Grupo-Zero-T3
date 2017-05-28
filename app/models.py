@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='media', default="img/avatarEstudiante3.png")
 
     class Meta:
         ordering = ["user"]
@@ -18,7 +18,7 @@ class Admin(models.Model):
 
 class Alumno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='media', default="img/avatarPenguin.png")
 
     class Meta:
         ordering = ["user"]
@@ -29,7 +29,7 @@ class Alumno(models.Model):
 
 class Vendedor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='media', default="img/avatarVendedor3.png")
 
     credito = models.BooleanField(default=False)
     debito = models.BooleanField(default=False)
@@ -85,7 +85,7 @@ class VendedorFijo(models.Model):
 class Producto(models.Model):
     vendedor = models.OneToOneField(Vendedor)
 
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='media', default="img/bread")
 
     nombre = models.CharField(max_length=60)
     descripcion = models.CharField(max_length=200)
@@ -97,7 +97,7 @@ class Producto(models.Model):
         (2, "vegetariano"),
         (3, "vegano"),
     )
-    categoria = models.IntegerField(choices=categorias, null=True, blank=True)
+    categoria = models.IntegerField(choices=categorias, default=1)
 
     class Meta:
         ordering = ["vendedor", "nombre"]

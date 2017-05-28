@@ -18,13 +18,13 @@
 
                 <div class="row hide-on-med-and-down">
                     <figure class="card-profile-image-large">
-                        <img src="{% static "img/AvatarVendedor6.png" %}" alt="profile image"
+                        <img src="{% static foto %}" alt="profile image"
                              class="circle z-depth-2 responsive-img activator">
                     </figure>
                 </div>
                 <div class="row show-on-med-and-down hide-on-large-only">
                     <figure class="card-profile-image-small">
-                        <img src="{% static "img/AvatarVendedor6.png" %}" alt="profile image"
+                        <img src="{% static foto %}" alt="profile image"
                              class="circle z-depth-2 responsive-img activator">
                     </figure>
                 </div>
@@ -138,7 +138,7 @@
                                     <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
                                         <img class="activator responsive-img center-block"
                                              style="max-width: 30%; margin-top:20px; margin-bottom:20px;"
-                                             src="{% static "img/pizza.png" %}">
+                                             src="{% static producto.foto %}">
                                     </div>
 
                                     <div class="card-content">
@@ -151,7 +151,7 @@
                                         <div id="modal{{ producto.id }}" class="modal">
                                             <div class="modal-content">
                                                 <img class="activator responsive-img center-block"
-                                                     src="{% static "img/pepperoni1.jpg" %}">
+                                                     src="{% static producto.foto %}">
                                             </div>
                                             <div class="modal-footer">
                                                 <a href="#!"
