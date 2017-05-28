@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
 
     class Meta:
         ordering = ["user"]
@@ -18,7 +18,7 @@ class Admin(models.Model):
 
 class Alumno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
 
     class Meta:
         ordering = ["user"]
@@ -29,14 +29,20 @@ class Alumno(models.Model):
 
 class Vendedor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
 
     credito = models.BooleanField(default=False)
-    dedito = models.BooleanField(default=False)
+    debito = models.BooleanField(default=False)
     efectivo = models.BooleanField(default=False)
     JUNAEB = models.BooleanField(default=False)
 
-    activo = models.BooleanField()
+    activo = models.BooleanField(default=False)
+
+    tipos = (
+        (1, "fijo"),
+        (2, "ambulante"),
+    )
+    tipo = models.IntegerField(choices=tipos, default=2)
 
     class Meta:
         ordering = ["user"]
@@ -79,23 +85,25 @@ class VendedorFijo(models.Model):
 class Producto(models.Model):
     vendedor = models.OneToOneField(Vendedor)
 
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
 
     nombre = models.CharField(max_length=60)
-    descripcion = models.CharField(max_length=60)
+    descripcion = models.CharField(max_length=200)
     precio = models.IntegerField()
     stock = models.IntegerField()
 
     categorias = (
-        ()
+        (1, "normal"),
+        (2, "vegetariano"),
+        (3, "vegano"),
     )
-    categoria = models.CharField(choices=categorias, max_length=60, null=True)
+    categoria = models.IntegerField(choices=categorias, null=True, blank=True)
 
     class Meta:
         ordering = ["vendedor", "nombre"]
 
     def __str__(self):
-        return "Producto: " + self.nombre + " $" + self.precio + " q" + self.stock
+        return "Producto: " + self.nombre + " $" + str(self.precio) + " q" + str(self.stock)
 
 
 class Favorito(models.Model):
@@ -104,3 +112,6 @@ class Favorito(models.Model):
 
     class Meta:
         ordering = ["alumno", "vendedor"]
+
+    def __str__(self):
+        return self.alumno.user.username + " " + self.vendedor.user.username
