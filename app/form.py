@@ -28,10 +28,21 @@ class VendedorFijoForm(forms.Form):
              ('Debito','Debito'),
              ('Efectivo','Efectivo'),
              ('JUNAEB','JUNAEB'))
-    pago = forms.MultipleChoiceField(
-        required=False,
-        widget=forms.CheckboxSelectMultiple,
-        choices=CHOICES,
+    credito = forms.BooleanField(
+        label='Credito',
+        initial=True
+    )
+    efectivo = forms.BooleanField(
+        label='Efectivo',
+        initial=True
+    )
+    debito = forms.BooleanField(
+        label='Debito',
+        initial=True
+    )
+    junaeb = forms.BooleanField(
+        label='JUNAEB',
+        initial=True
     )
     hora_apertura = forms.CharField(label="hora_apertura", widget=forms.TextInput(attrs={'class':'validate'}))
     hora_clausura = forms.CharField(label="hora_clausura", widget=forms.TextInput(attrs={'class':'validate'}))
