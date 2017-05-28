@@ -62,13 +62,27 @@ def vendedorprofilepage(request, id):
 
 def registrar(request):
     # if this is a POST request we need to process the form data
+
     if request.method == 'POST':
+
         # create a form instance and populate it with data from the request:
         form = VendedorFijoForm(request.POST)
         # check whether it's valid:
+        print(form.is_valid())
         if form.is_valid():
+
             # process the data in form.cleaned_data as required
-            # ...
+            nombre = form.cleaned_data['nombre']
+            email = form.cleaned_data['email']
+            contrasena = form.cleaned_data['password']
+            hora_apertura=form.cleaned_data['hora_apertura']
+            hora_clausura=form.cleaned_data['hora_clausura']
+            user = User(username=nombre, password=contrasena, email=email)
+            user.save()
+            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=1)
+            vendedor.save()
+            vendedorfijo=VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura, ubicacion='')
+            vendedorfijo.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
 

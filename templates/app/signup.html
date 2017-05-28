@@ -18,7 +18,10 @@ $(document).ready(function() {
 
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row" style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-          <form class="col s12 m12" method="post" action="{% url 'registrar' %}">
+            <h5 class="teal-text" style="text-align: center;">VendedorFijo</h5>
+          <form class="col s12 m12" method="post" action="{% url 'registrar' %}">{% csrf_token %}
+              {{ form.errors }}
+              {{ form.non_field_errors }}
             <div class='row'>
               <div class='col s12 m12'>
               </div>
@@ -51,8 +54,8 @@ $(document).ready(function() {
                     </div>
                     <div class="input-field col s6">
                       <i class="material-icons prefix">alarm</i>
-                        {{ form.hora_apertura.errors }}
-                        {{ form.hora_apertura }}
+                        {{ form.hora_clausura.errors }}
+                        {{ form.hora_clausura }}
                       <label for="icon_telephone">Hora final</label>
                     </div>
                   </div>
