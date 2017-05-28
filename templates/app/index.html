@@ -1,5 +1,5 @@
 {% extends 'app/base.html' %}
-
+{% load static %}
 {% block content %}
 	<!-- <div id="map"></div> -->
 
@@ -93,4 +93,19 @@
     <!-- <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=KEY&callback=initMap">
     </script> -->
+        <div class="row">
+            <div class="col s8 offset-s2">
+                <div style="position: relative">
+                    <img src="{% static "app/map.jpg" %}" alt="Mapa" width="100%">
+                    <a href="fav1" title="Favorito 1" style="position: absolute; left: 46.19%; top: 23.78%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="fav2" title="Favorito 2" style="position: absolute; left: 63.45%; top: 56.99%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="fav3" title="Favorito 3" style="position: absolute; left: 50%; top: 85.66%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="vend1" title="Vendedor fijo 1" style="position: absolute; left: 88.1%; top: 17.83%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="vend2" title="Vendedor fijo 2" style="position: absolute; left: 51.19%; top: 25.35%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="vend3" title="Vendedor ambulante 1" style="position: absolute; left: 58.57%; top: 59.97%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="vend4" title="Vendedor fijo 3" style="position: absolute; left: 59.17%; top: 77.45%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                    <a href="vend5" title="Vendedor fijo 4" style="position: absolute; left: 56.79%; top: 84.44%; width: 2.38%; height: 3.5%; z-index: 2;"></a>
+                </div>
+            </div>
+        </div>
 {% endblock %}
