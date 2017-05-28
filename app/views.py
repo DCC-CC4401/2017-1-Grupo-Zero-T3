@@ -31,7 +31,7 @@ def vendedorprofilepage(request, id):
     context["id"] = id
 
     v = Vendedor.objects.get(id=id)
-    context["username"] = v.user.username
+    context["vendor"] = v.user.username
     context["estado"] = "disponible" if v.activo else "no disponible"
 
     pagos = []
@@ -44,8 +44,9 @@ def vendedorprofilepage(request, id):
     if v.JUNAEB:
         pagos.append("JUNAEB")
     context["pagos"] = pagos
+    context["tipo"] = (v.tipo == 1)
 
-    if v.tipo == 1:
+    if context["tipo"]:
         vf = VendedorFijo.objects.get(vendedor=v)
         h = vf.hora_apertura
         context["apertura"] = str(int(h/100)) + ":" + str(h%100)
