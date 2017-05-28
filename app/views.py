@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from app.models import *
 from .form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm
+import time
 
 
 # Create your views here.
@@ -33,7 +34,6 @@ def vendedorprofilepage(request, id):
 
     v = Vendedor.objects.get(id=id)
     context["vendor"] = v.user.username
-    context["estado"] = "disponible" if v.activo else "no disponible"
 
     pagos = []
     if v.efectivo:
@@ -50,10 +50,19 @@ def vendedorprofilepage(request, id):
 
     if context["tipo"]:
         vf = VendedorFijo.objects.get(vendedor=v)
-        h = vf.hora_apertura
-        context["apertura"] = str(int(h / 100)) + ":" + str(h % 100)
-        h = vf.hora_clausura
-        context["clausura"] = str(int(h / 100)) + ":" + str(h % 100)
+        ha = vf.hora_apertura
+        context["apertura"] = str(int(ha / 100)) + ":" + str(ha % 100).zfill(2)
+        hc = vf.hora_clausura
+        context["clausura"] = str(int(hc / 100)) + ":" + str(hc % 100).zfill(2)
+
+        hora_local = time.localtime().tm_hour * 100 + time.localtime().tm_min
+        if ha < hora_local < hc:
+            context["estado"] = "disponible"
+        else:
+            context["estado"] = "no disponible"
+
+    else:
+        context["estado"] = "disponible" if v.activo else "no disponible"
 
     context["fav"] = len(Favorito.objects.filter(vendedor=v))
     context["productos"] = Producto.objects.filter(vendedor=v)
@@ -61,8 +70,6 @@ def vendedorprofilepage(request, id):
     for p in context["productos"]:
         categorias[p.id] = p.get_categoria_display()
     context["categorias"] = categorias
-
-    print(context)
 
     return render(request, "app/vendedor-profile-page.html", context)
 

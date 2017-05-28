@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(upload_to='media', default="img/avatarEstudiante3.png")
+    foto = models.ImageField(upload_to='media', default="img/avatarEstudiante3.png", blank=True)
 
     class Meta:
         ordering = ["user"]
@@ -18,7 +18,7 @@ class Admin(models.Model):
 
 class Alumno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(upload_to='media', default="img/avatarPenguin.png")
+    foto = models.ImageField(upload_to='media', default="img/avatarPenguin.png", blank=True)
 
     class Meta:
         ordering = ["user"]
@@ -29,7 +29,7 @@ class Alumno(models.Model):
 
 class Vendedor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(upload_to='media', default="img/avatarVendedor3.png")
+    foto = models.ImageField(upload_to='media', default="img/avatarVendedor3.png", blank=True)
 
     credito = models.BooleanField(default=False)
     debito = models.BooleanField(default=False)
@@ -85,7 +85,7 @@ class VendedorFijo(models.Model):
 class Producto(models.Model):
     vendedor = models.OneToOneField(Vendedor)
 
-    foto = models.ImageField(upload_to='media', default="img/bread")
+    foto = models.ImageField(upload_to='media', default="img/bread", blank=True)
 
     nombre = models.CharField(max_length=60)
     descripcion = models.CharField(max_length=200)
