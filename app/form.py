@@ -47,8 +47,8 @@ class VendedorFijoForm(forms.Form):
     hora_apertura = forms.CharField(label="hora_apertura", widget=forms.TextInput(attrs={'class':'validate'}))
     hora_clausura = forms.CharField(label="hora_clausura", widget=forms.TextInput(attrs={'class':'validate'}))
 
-#class AlumnoForm(forms.ModelForm):
-
-#    class Meta:
- #       model = Alumno
-  #      fields = ('email', 'password',)
+class AlumnoForm(forms.Form):
+    nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class':'validate'}))
+    password = forms.CharField(label="password", widget=forms.PasswordInput(render_value = True))
+    password2 = forms.CharField(label="password2", widget=forms.PasswordInput(render_value = True))
+    email = forms.CharField(label="email", widget=forms.EmailInput(attrs={'class':'validate'}))

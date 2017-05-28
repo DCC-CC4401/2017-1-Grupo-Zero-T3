@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from app.models import *
-from .form import VendedorFijoForm, VendedorAmbulanteForm
+from .form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm
 
 
 # Create your views here.
@@ -112,7 +112,7 @@ def registrarAmbulante(request):
             contrasena = form.cleaned_data['password']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=1)
+            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=2)
             vendedor.save()
             vendedorambulante=VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
@@ -121,7 +121,7 @@ def registrarAmbulante(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = VendedorFijoForm()
+        form = VendedorAmbulanteForm()
 
     return render(request, 'app/signupAmbulante.html', {'form': form})
 
@@ -131,7 +131,7 @@ def registrarAlumno(request):
     if request.method == 'POST':
 
         # create a form instance and populate it with data from the request:
-        form = VendedorFijoForm(request.POST)
+        form = AlumnoForm(request.POST)
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
@@ -140,19 +140,15 @@ def registrarAlumno(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
-            hora_apertura=form.cleaned_data['hora_apertura']
-            hora_clausura=form.cleaned_data['hora_clausura']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=1)
-            vendedor.save()
-            vendedorfijo=VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura, ubicacion='')
-            vendedorfijo.save()
+            alumno=Alumno(user=user, foto=0)
+            alumno.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = VendedorFijoForm()
+        form = AlumnoForm()
 
     return render(request, 'app/signupAlumno.html', {'form': form})
