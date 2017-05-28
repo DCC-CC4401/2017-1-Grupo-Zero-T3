@@ -19,7 +19,7 @@ $(document).ready(function() {
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row" style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
             <h5 class="teal-text" style="text-align: center;">Registrar Alumno</h5>
-          <form class="col s12 m12" method="post" action="{% url 'registrarAlumno' %}">{% csrf_token %}
+          <form enctype="multipart/form-data" class="col s12 m12" method="post" action="{% url 'registrarAlumno' %}">{% csrf_token %}
               {{ form.errors }}
               {{ form.non_field_errors }}
             <div class='row'>

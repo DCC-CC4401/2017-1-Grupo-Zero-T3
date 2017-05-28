@@ -14,10 +14,21 @@ class VendedorAmbulanteForm(forms.Form):
              ('Debito','Debito'),
              ('Efectivo','Efectivo'),
              ('JUNAEB','JUNAEB'))
-    pago = forms.MultipleChoiceField(
-        required=False,
-        widget=forms.CheckboxSelectMultiple,
-        choices=CHOICES,
+    credito = forms.BooleanField(
+        label='Credito',
+        initial=True
+    )
+    efectivo = forms.BooleanField(
+        label='Efectivo',
+        initial=True
+    )
+    debito = forms.BooleanField(
+        label='Debito',
+        initial=True
+    )
+    junaeb = forms.BooleanField(
+        label='JUNAEB',
+        initial=True
     )
 
 class VendedorFijoForm(forms.Form):
