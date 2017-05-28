@@ -19,7 +19,7 @@ $(document).ready(function() {
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row" style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
             <h5 class="teal-text" style="text-align: center;">Registrar Vendedor Fijo</h5>
-          <form class="col s12 m12" method="post" action="{% url 'registrarFijo' %}">{% csrf_token %}
+          <form enctype="multipart/form-data" class="col s12 m12" method="post" action="{% url 'registrarFijo' %}">{% csrf_token %}
               {{ form.errors }}
               {{ form.non_field_errors }}
             <div class='row'>
@@ -90,20 +90,34 @@ $(document).ready(function() {
                   Cambiar avatar:
               </div>
 
-                <div class="col s12 l6">
-                  <input class="with-gap" name="group1" type="radio" id="test1" />
-                    {% load static %}
-                  <label for="test1"><img style="max-width: 50px;" src="{% static "img/AvatarVendedor1.png" %}"></label>
-                  <input class="with-gap" name="group1" type="radio" id="test2" />
-                    {% load static %}
-                  <label for="test2"><img style="max-width: 50px;" src="{% static "img/AvatarVendedor2.png" %}"></label>
-                  <input class="with-gap" name="group1" type="radio" id="test3" />
-                    {% load static %}
-                  <label for="test3"><img style="max-width: 50px;" src="{% static "img/AvatarVendedor3.png" %}"></label>
-                  <input class="with-gap" name="group1" type="radio" id="test4" />
-                    {% load static %}
-                  <label for="test4"><img style="max-width: 50px;" src="{% static "img/AvatarVendedor4.png" %}"></label>
-                </div>
+              {{ form.file.errors }}
+              {{ form.file }}
+
+              <!--div class="col s9">
+                  <div class="dropify-wrapper touch-fallback">
+                      <div class="dropify-message">
+                          <p class="center">
+                              <i class="material-icons center">mdi_file_cloud_upload</i>
+                          </p>
+                          <p class="center">Arrastre y suelte un archivo aquí o haga click</p>
+                          <p class="dropify-error center">Sorry, this file is too large</p>
+                      </div>
+
+                      <input  type="file" name="myfile" id="input-file-now" class="dropify" data-default-file="">
+
+                      <button type="button" class="dropify-clear">Remove</button>
+
+                      <div class="dropify-preview"><span class="dropify-render"></span>
+                          <div class="dropify-infos">
+                              <div class="dropify-infos-inner">
+                                  <p class="dropify-filename">
+                                      <span class="dropify-filename-inner"></span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div-->
 
 
             <div class='row'>

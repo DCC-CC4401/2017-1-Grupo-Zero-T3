@@ -34,6 +34,7 @@ def vendedorprofilepage(request, id):
 
     v = Vendedor.objects.get(id=id)
     context["vendor"] = v.user.username
+    context["estado"] = "disponible" if v.activo else "no disponible"
 
     pagos = []
     if v.efectivo:
@@ -71,6 +72,8 @@ def vendedorprofilepage(request, id):
         categorias[p.id] = p.get_categoria_display()
     context["categorias"] = categorias
 
+    print(context)
+
     return render(request, "app/vendedor-profile-page.html", context)
 
 
@@ -80,7 +83,7 @@ def registrarFijo(request):
     if request.method == 'POST':
 
         # create a form instance and populate it with data from the request:
-        form = VendedorFijoForm(request.POST)
+        form = VendedorFijoForm(request.POST, request.FILES)
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
@@ -88,15 +91,14 @@ def registrarFijo(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
-            hora_apertura = form.cleaned_data['hora_apertura']
-            hora_clausura = form.cleaned_data['hora_clausura']
+            hora_apertura=form.cleaned_data['hora_apertura']
+            hora_clausura=form.cleaned_data['hora_clausura']
+            imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor = Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True,
-                                tipo=1)
+            vendedor=Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=1)
             vendedor.save()
-            vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
-                                        ubicacion='')
+            vendedorfijo=VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura, ubicacion='')
             vendedorfijo.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
@@ -124,10 +126,9 @@ def registrarAmbulante(request):
             contrasena = form.cleaned_data['password']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor = Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True,
-                                tipo=2)
+            vendedor=Vendedor(user=user, foto=0, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=2)
             vendedor.save()
-            vendedorambulante = VendedorAmbulante(vendedor=vendedor)
+            vendedorambulante=VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
@@ -149,13 +150,14 @@ def registrarAlumno(request):
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
+
             # process the data in form.cleaned_data as required
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            alumno = Alumno(user=user, foto=0)
+            alumno=Alumno(user=user, foto=0)
             alumno.save()
             # redirect to a new URL:
             return HttpResponseRedirect('app/login')
