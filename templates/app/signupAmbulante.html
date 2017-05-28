@@ -18,7 +18,7 @@ $(document).ready(function() {
 
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row" style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-            <h5 class="teal-text" style="text-align: center;">Vendedor Ambulante</h5>
+            <h5 class="teal-text" style="text-align: center;">Registrar Vendedor Ambulante</h5>
           <form class="col s12 m12" method="post" action="{% url 'registrarAmbulante' %}">{% csrf_token %}
               {{ form.errors }}
               {{ form.non_field_errors }}
