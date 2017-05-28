@@ -27,24 +27,16 @@ class Alumno(models.Model):
         return "Alumno: " + self.user.username + ", " + self.user.email
 
 
-class FormasDePago(models.Model):
+class Vendedor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    foto = models.ImageField()
+
     credito = models.BooleanField(default=False)
     dedito = models.BooleanField(default=False)
     efectivo = models.BooleanField(default=False)
     JUNAEB = models.BooleanField(default=False)
 
-    def __str__(self):
-        cred = "credito, " if self.credito else ""
-        deb = "debito, " if self.debito else ""
-        efec = "efectivo, " if self.efectivo else ""
-        jun = "JUNAEB, " if self.JUNAEB else ""
-        return (cred + deb + efec + jun)[:-2]
-
-
-class Vendedor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField()
-    formas_de_pago = models.OneToOneField(FormasDePago, on_delete=models.CASCADE)
+    activo = models.BooleanField()
 
     class Meta:
         ordering = ["user"]
@@ -53,7 +45,11 @@ class Vendedor(models.Model):
         return self.user.username + ", " + self.user.email
 
     def pagos(self):
-        return str(self.formas_de_pago)
+        cred = "credito, " if self.credito else ""
+        deb = "debito, " if self.debito else ""
+        efec = "efectivo, " if self.efectivo else ""
+        jun = "JUNAEB, " if self.JUNAEB else ""
+        return (cred + deb + efec + jun)[:-2]
 
 
 class VendedorAmbulante(models.Model):
@@ -90,6 +86,11 @@ class Producto(models.Model):
     precio = models.IntegerField()
     stock = models.IntegerField()
 
+    categorias = (
+        ()
+    )
+    categoria = models.CharField(choices=categorias, max_length=60, null=True)
+
     class Meta:
         ordering = ["vendedor", "nombre"]
 
@@ -98,5 +99,8 @@ class Producto(models.Model):
 
 
 class Favorito(models.Model):
-    alumno = models.OneToOneField(Alumno, on_delete=models.CASCADE)
-    vendedor = models.OneToOneField(Vendedor, on_delete=models.CASCADE)
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        ordering = ["alumno", "vendedor"]
