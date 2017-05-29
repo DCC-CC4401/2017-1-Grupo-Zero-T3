@@ -392,7 +392,7 @@ def editarproducto(request, id):
             producto.stock = stock
             producto.save()
             context = context_vendedor(producto.vendedor.id)
-            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id), context)
+            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id), context)
 
 
         context = dict()
