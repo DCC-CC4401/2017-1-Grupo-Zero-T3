@@ -103,7 +103,7 @@ def registrarFijo(request):
             vendedorfijo=VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura, ubicacion='')
             vendedorfijo.save()
             # redirect to a new URL:
-            return HttpResponseRedirect('app/login.html')
+            return render(request, "app/login.html")
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -135,7 +135,7 @@ def registrarAmbulante(request):
             vendedorambulante=VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
             # redirect to a new URL:
-            return HttpResponseRedirect('app/login.html')
+            return render(request, "app/login.html")
 
     # if a GET (or any other method) we'll create a blank form
     else:
