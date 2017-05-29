@@ -42,6 +42,7 @@ class VendedorFijoForm(forms.Form):
     nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class': 'validate'}))
     password = forms.CharField(label="password", widget=forms.PasswordInput(render_value=True))
     password2 = forms.CharField(label="password2", widget=forms.PasswordInput(render_value=True))
+
     email = forms.CharField(label="email", widget=forms.EmailInput(attrs={'class': 'validate'}))
     file = forms.FileField()
     CHOICES = (('Credito', 'Credito'),
@@ -68,8 +69,11 @@ class VendedorFijoForm(forms.Form):
         required=False,
         initial=False
     )
-    hora_apertura = forms.CharField(label="hora_apertura", widget=forms.TextInput(attrs={'class': 'validate'}))
-    hora_clausura = forms.CharField(label="hora_clausura", widget=forms.TextInput(attrs={'class': 'validate'}))
+
+    hora_apertura = forms.TimeField(label="hora_apertura", widget=forms.TimeInput(attrs={'type': 'time'}),
+                                    required=False)
+    hora_clausura = forms.TimeField(label="hora_clausura", widget=forms.TimeInput(attrs={'type': 'time'}),
+                                    required=False)
 
 
 class AlumnoForm(forms.Form):
@@ -84,16 +88,21 @@ class ProductoForm(forms.Form):
     nombre = forms.CharField(label="nombre",
                              widget=forms.TextInput(attrs={'class': 'validate', 'placeholder': 'pizza'}))
     descripcion = forms.CharField(label="descripcion", widget=forms.Textarea)
-    precio = forms.IntegerField(label="precio")
-    stock = forms.IntegerField(label="stock")
+    precio = forms.IntegerField(label="precio", min_value=0)
+    stock = forms.IntegerField(label="stock", min_value=0)
     file = forms.FileField()
 
 
 class EditarVendedor(forms.Form):
     nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class': 'validate'}))
+    user_id = forms.IntegerField(label="user_id", widget=forms.HiddenInput())
 
-    hora_apertura = forms.CharField(label="hora_apertura", widget=forms.TextInput(attrs={'class': 'validate'}))
-    hora_clausura = forms.CharField(label="hora_clausura", widget=forms.TextInput(attrs={'class': 'validate'}))
+    hora_apertura = forms.TimeField(label="hora apertura",
+                                    widget=forms.TimeInput(format="%H:%M", attrs={"type": "time"}),
+                                    initial="10:00")
+    hora_clausura = forms.TimeField(label="hora clausura",
+                                    widget=forms.TimeInput(format="%H:%M", attrs={"type": "time"}),
+                                    initial="12:00")
 
     credito = forms.BooleanField(
         label='credito',

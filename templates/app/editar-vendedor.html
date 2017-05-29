@@ -16,7 +16,11 @@
                 {{ form.non_field_errors }}
                 {{ form.non_field_errors }}
 
-                <div class='row'></div>
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        {{ form.user_id }}
+                    </div>
+                </div>
 
                 <div class='row'>
                     <div class='input-field col s12'>
@@ -26,19 +30,19 @@
                     </div>
                 </div>
 
-                {% if tipo %}
+                {% if fijo %}
                     <div class="row">
+                        <div class="col s6">Hora apertura</div>
+                        <div class="col s6">Hora clausura</div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">alarm</i>
                             {{ form.hora_apertura.errors }}
                             {{ form.hora_apertura }}
-                            <label for="icon_prefix">Hora apertura</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">alarm</i>
                             {{ form.hora_clausura.errors }}
                             {{ form.hora_clausura }}
-                            <label for="icon_telephone">Hora clausura</label>
                         </div>
                     </div>
                 {% endif %}
@@ -79,6 +83,7 @@
                     <div class='input-field col s12'>
                         {{ form.password.errors }}
                         {{ form.password }}
+                        {{ form.label }}
                         <label style="text-align: center" for='password'>Ingresa tu contraseña</label>
                     </div>
                 </div>

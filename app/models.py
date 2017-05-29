@@ -68,8 +68,8 @@ class VendedorAmbulante(models.Model):
 class VendedorFijo(models.Model):
     vendedor = models.OneToOneField(Vendedor, on_delete=models.CASCADE)
 
-    hora_apertura = models.IntegerField()
-    hora_clausura = models.IntegerField()
+    hora_apertura = models.TimeField()
+    hora_clausura = models.TimeField()
     ubicacion = models.CharField(max_length=60)
 
     def __str__(self):

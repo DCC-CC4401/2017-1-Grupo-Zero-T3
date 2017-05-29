@@ -1,155 +1,161 @@
 {% extends 'app/base.html' %}
 {% block content %}
 
-<script>
-$(document).ready(function() {
-    $('select').material_select();
-});
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
 
-</script>
+    </script>
 
 
-<div class="section"></div>
-  <main>
-      <div class="section"></div>
+    <div class="section"></div>
+    <main>
+        <div class="section"></div>
 
-      <h5 class="teal-text" style="text-align: center;">¡Regístrate!</h5>
-      <div class="section"></div>
+        <h5 class="teal-text" style="text-align: center;">¡Regístrate!</h5>
+        <div class="section"></div>
 
-      <div class="container">
-        <div class="z-depth-1 grey lighten-4 row" style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-            <h5 class="teal-text" style="text-align: center;">Registrar Vendedor Fijo</h5>
-          <form enctype="multipart/form-data" class="col s12 m12" method="post" action="{% url 'registrarFijo' %}">{% csrf_token %}
-              {{ form.errors }}
-              {{ form.non_field_errors }}
-            <div class='row'>
-              <div class='col s12 m12'>
-              </div>
-            </div>
-
-            <div class='row'>
-              <div class='input-field col s12 m12'>
-                  {{ form.nombre.errors }}
-                  {{ form.nombre }}
-                <label style="text-align: center" for='nombre'>Ingresa tu nombre</label>
-              </div>
-            </div>
-
-            <div class='row'>
-              <div class='input-field col s12 m12'>
-                  {{ form.email.errors }}
-                  {{ form.email }}
-                <label style="text-align: center" for='email'>Ingresa tu e-mail</label>
-              </div>
-            </div>
-
-              <div class="row">
-                <div class="col s12">
-                  <div class="row">
-                    <div class="input-field col s6">
-                      <i class="material-icons prefix">alarm</i>
-                        {{ form.hora_apertura.errors }}
-                        {{ form.hora_apertura }}
-                      <label for="icon_prefix">Hora inicial</label>
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4 row"
+                 style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+                <h5 class="teal-text" style="text-align: center;">Registrar Vendedor Fijo</h5>
+                <form enctype="multipart/form-data" class="col s12 m12" method="post"
+                      action="{% url 'registrarFijo' %}">{% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                    <div class='row'>
+                        <div class='col s12 m12'>
+                        </div>
                     </div>
-                    <div class="input-field col s6">
-                      <i class="material-icons prefix">alarm</i>
-                        {{ form.hora_clausura.errors }}
-                        {{ form.hora_clausura }}
-                      <label for="icon_telephone">Hora final</label>
+
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            {{ form.nombre.errors }}
+                            {{ form.nombre }}
+                            <label style="text-align: center" for='nombre'>Ingresa tu nombre</label>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            {{ form.email.errors }}
+                            {{ form.email }}
+                            <label style="text-align: center" for='email'>Ingresa tu e-mail</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="col s6">Hora apertura</div>
+                                <div class="col s6">Hora clausura</div>
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">alarm</i>
+                                    {{ form.hora_apertura.errors }}
+                                    {{ form.hora_apertura }}
+                                </div>
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">alarm</i>
+                                    {{ form.hora_clausura.errors }}
+                                    {{ form.hora_clausura }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-            <div class='row'>
-              <div class='input-field col s12 m12'>
-                Seleccione sus formas de pago:
-                      <p>
-                          {{ form.efectivo }}{{ form.efectivo.label_tag }}
-                          {{ form.efectivo.errors }}
-                      </p>
-                      <p>
-                          {{ form.credito }}{{ form.credito.label_tag }}
-                          {{ form.credito.errors }}
-                      </p>
-                      <p>
-                          {{ form.debito }}{{ form.debito.label_tag }}
-                          {{ form.debito.errors }}
-                      </p>
-                      <p>
-                          {{ form.junaeb }}{{ form.junaeb.label_tag }}
-                          {{ form.junaeb.errors }}
-                      </p>
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            Seleccione sus formas de pago:
+                            <p>
+                                {{ form.efectivo }}{{ form.efectivo.label_tag }}
+                                {{ form.efectivo.errors }}
+                            </p>
+                            <p>
+                                {{ form.credito }}{{ form.credito.label_tag }}
+                                {{ form.credito.errors }}
+                            </p>
+                            <p>
+                                {{ form.debito }}{{ form.debito.label_tag }}
+                                {{ form.debito.errors }}
+                            </p>
+                            <p>
+                                {{ form.junaeb }}{{ form.junaeb.label_tag }}
+                                {{ form.junaeb.errors }}
+                            </p>
 
-              </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        Cambiar avatar:
+                    </div>
+
+                    {{ form.file.errors }}
+                    {{ form.file }}
+
+                    <!--div class="col s9">
+                        <div class="dropify-wrapper touch-fallback">
+                            <div class="dropify-message">
+                                <p class="center">
+                                    <i class="material-icons center">mdi_file_cloud_upload</i>
+                                </p>
+                                <p class="center">Arrastre y suelte un archivo aquí o haga click</p>
+                                <p class="dropify-error center">Sorry, this file is too large</p>
+                            </div>
+
+                            <input  type="file" name="myfile" id="input-file-now" class="dropify" data-default-file="">
+
+                            <button type="button" class="dropify-clear">Remove</button>
+
+                            <div class="dropify-preview"><span class="dropify-render"></span>
+                                <div class="dropify-infos">
+                                    <div class="dropify-infos-inner">
+                                        <p class="dropify-filename">
+                                            <span class="dropify-filename-inner"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div-->
+
+
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            {{ form.password.errors }}
+                            {{ form.password }}
+                            <label style="text-align: center" for='id_password'>Ingresa tu contraseña</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            {{ form.password2.errors }}
+                            {{ form.password2 }}
+                            <label style="text-align: center" for='id_password2'>Repite tu contraseña</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <button type='submit' name='btn_login' class='col l6 offset-l3 btn btn-large waves-effect teal'>
+                            Registrarse
+                        </button>
+                    </div>
+
+                </form>
             </div>
-
-              <div>
-                  Cambiar avatar:
-              </div>
-
-              {{ form.file.errors }}
-              {{ form.file }}
-
-              <!--div class="col s9">
-                  <div class="dropify-wrapper touch-fallback">
-                      <div class="dropify-message">
-                          <p class="center">
-                              <i class="material-icons center">mdi_file_cloud_upload</i>
-                          </p>
-                          <p class="center">Arrastre y suelte un archivo aquí o haga click</p>
-                          <p class="dropify-error center">Sorry, this file is too large</p>
-                      </div>
-
-                      <input  type="file" name="myfile" id="input-file-now" class="dropify" data-default-file="">
-
-                      <button type="button" class="dropify-clear">Remove</button>
-
-                      <div class="dropify-preview"><span class="dropify-render"></span>
-                          <div class="dropify-infos">
-                              <div class="dropify-infos-inner">
-                                  <p class="dropify-filename">
-                                      <span class="dropify-filename-inner"></span>
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div-->
-
-
-            <div class='row'>
-              <div class='input-field col s12 m12'>
-                  {{ form.password.errors }}
-                  {{ form.password }}
-                <label style="text-align: center" for='password'>Ingresa tu contraseña</label>
-              </div>
-            </div>
-
-            <div class='row'>
-              <div class='input-field col s12 m12'>
-                  {{ form.password2.errors }}
-                  {{ form.password2 }}
-                <label style="text-align: center" for='password2'>Repite tu contraseña</label>
-              </div>
-            </div>
-
-              <div class='row'>
-                <button type='submit' name='btn_login' class='col l6 offset-l3 btn btn-large waves-effect teal'>Registrarse</button>
-              </div>
-
-          </form>
         </div>
-      </div>
-        <div style="text-align: center;"><a class="grey-text"> ¿Ya tienes una cuenta? </a><a href="{% url 'login' %}">Inicia sesión</a></div>
+        <div style="text-align: center;"><a class="grey-text"> ¿Ya tienes una cuenta? </a><a href="{% url 'login' %}">Inicia
+            sesión</a></div>
 
 
-    <div class="section"></div>
-    <div class="section"></div>
-  </main>
+        <div class="section"></div>
+        <div class="section"></div>
+    </main>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 {% endblock %}

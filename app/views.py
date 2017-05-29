@@ -1,10 +1,13 @@
+import datetime
+import time
+
+from django.contrib.auth import authenticate, login, logout
 from django.forms import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
+
+from app.form import *
 from app.models import *
-from app.form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm, EditarVendedor, ProductoForm, LoginForm
-import time
 
 
 # Create your views here.
@@ -81,13 +84,12 @@ def vendedorprofilepage(request, id):
 
     if context["tipo"]:
         vf = VendedorFijo.objects.get(vendedor=v)
-        ha = vf.hora_apertura
-        context["apertura"] = str(int(ha / 100)) + ":" + str(ha % 100).zfill(2)
-        hc = vf.hora_clausura
-        context["clausura"] = str(int(hc / 100)) + ":" + str(hc % 100).zfill(2)
+        context["apertura"] = vf.hora_apertura.strftime("%H:%M")
+        context["clausura"] = vf.hora_clausura.strftime("%H:%M")
+        hora_local = time.localtime()
+        hora_local = datetime.time(hora_local.tm_hour, hora_local.tm_min)
 
-        hora_local = time.localtime().tm_hour * 100 + time.localtime().tm_min
-        if ha < hora_local < hc:
+        if vf.hora_apertura < hora_local < vf.hora_clausura:
             context["estado"] = "disponible"
         else:
             context["estado"] = "no disponible"
@@ -134,10 +136,6 @@ def registrarFijo(request):
             vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
                                         ubicacion='')
             vendedorfijo.save()
-            user = authenticate(request, username=nombre, password=contrasena)
-            login(request, user)
-            context = dict()
-            context["id"] = vendedor.id
             # redirect to a new URL:
             return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
 
@@ -168,15 +166,15 @@ def registrarAmbulante(request):
             debito = form.cleaned_data['debito']
             junaeb = form.cleaned_data['junaeb']
             imagen = form.cleaned_data['file']
+
             user = User(username=nombre, email=email)
             user.set_password(contrasena)
             user.save()
             usuario = Usuario(user=user, foto=imagen, tipo=3)
             usuario.save()
-            vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo,
-                                JUNAEB=junaeb, tipo=2)
+            vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb, tipo=2)
             vendedor.save()
-            vendedorambulante = VendedorAmbulante(vendedor=vendedor)
+            vendedorambulante = VendedorAmbulante(vendedor=vendedor, activo=True)
             vendedorambulante.save()
             # redirect to a new URL:
             user = authenticate(request, username=nombre, password=contrasena)
@@ -249,6 +247,8 @@ def editarvendedor(request, id):
             efectivo = form.cleaned_data["efectivo"]
             junaeb = form.cleaned_data["junaeb"]
             foto = form.cleaned_data["foto"]
+
+            u = User.objects.get()
 
             return vendedorprofilepage(request, id)
 
