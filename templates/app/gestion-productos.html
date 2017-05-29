@@ -15,6 +15,7 @@
 
                 <form enctype="multipart/form-data" action="{% url 'registrarProducto' id %}" method="post">
                     {% csrf_token %}
+
                     {{ form.errors }}
                     {{ form.non_field_errors }}
 

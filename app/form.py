@@ -78,6 +78,7 @@ class AlumnoForm(forms.Form):
     file = forms.FileField()
 
 class ProductoForm(forms.Form):
+
     nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class':'validate', 'placeholder':'pizza'}))
     descripcion = forms.CharField(label="descripcion", widget=forms.Textarea)
     precio = forms.IntegerField(label="precio")

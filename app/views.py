@@ -222,7 +222,6 @@ def editar_vendedor(request, id):
 
 def registrarProducto(request, id):
     # if this is a POST request we need to process the form data
-
     if request.method == 'POST':
 
         # create a form instance and populate it with data from the request:
