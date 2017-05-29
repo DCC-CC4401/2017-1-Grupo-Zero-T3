@@ -1,3 +1,4 @@
+from django.forms import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from app.models import *
@@ -88,6 +89,7 @@ def registrarFijo(request):
         print(form.is_valid())
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            form = clean(form)
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
@@ -121,6 +123,7 @@ def registrarAmbulante(request):
         print(form.is_valid())
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            form = clean(form)
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
@@ -151,7 +154,7 @@ def registrarAlumno(request):
         # check whether it's valid:
         print(form.is_valid())
         if form.is_valid():
-
+            form = clean(form)
             # process the data in form.cleaned_data as required
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
@@ -169,3 +172,12 @@ def registrarAlumno(request):
         form = AlumnoForm()
 
     return render(request, 'app/signupAlumno.html', {'form': form})
+
+def clean(self):
+    password1 = self.cleaned_data.get('password')
+    password2 = self.cleaned_data.get('password2')
+
+    if password1 and password1 != password2:
+        raise forms.ValidationError("Passwords don't match")
+
+    return self

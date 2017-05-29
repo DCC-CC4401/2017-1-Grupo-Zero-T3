@@ -22,6 +22,7 @@ $(document).ready(function() {
           <form enctype="multipart/form-data" class="col s12 m12" method="post" action="{% url 'registrarAlumno' %}">{% csrf_token %}
               {{ form.errors }}
               {{ form.non_field_errors }}
+              {{ form.non_field_errors }}
             <div class='row'>
               <div class='col s12 m12'>
               </div>
