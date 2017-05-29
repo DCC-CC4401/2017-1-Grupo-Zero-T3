@@ -1,5 +1,4 @@
 from django.forms import forms
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from app.models import *
@@ -11,9 +10,11 @@ import time
 def index(request):
     return render(request, "app/index.html")
 
+
 def logout_view(request):
     logout(request)
     return render(request, "app/index.html")
+
 
 def login_view(request):
     # create a form instance and populate it with data from the request:
@@ -21,11 +22,10 @@ def login_view(request):
     # check whether it's valid:
     print(form.is_valid())
     if form.is_valid():
-        # process the data in form.cleaned_data as required
-        # form = clean(form)
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
             login(request, user)
             return render(request, "app/index.html")
@@ -35,9 +35,6 @@ def login_view(request):
     else:
         form = LoginForm()
         return render(request, 'app/login.html', {'form': form})
-
-# def login_view(request):
-#    return render(request, "app/login.html")
 
 
 def signup(request):
@@ -60,7 +57,6 @@ def vendedorprofilepage(request, id):
 
     v = Vendedor.objects.get(id=id)
     context["vendor"] = v.user.username
-    context["estado"] = "disponible" if v.activo else "no disponible"
 
     pagos = []
     if v.efectivo:
@@ -73,7 +69,7 @@ def vendedorprofilepage(request, id):
         pagos.append("JUNAEB")
     context["pagos"] = pagos
     context["tipo"] = (v.tipo == 1)
-    context["foto"] = v.foto
+    context["foto"] = v.user.foto
 
     if context["tipo"]:
         vf = VendedorFijo.objects.get(vendedor=v)
@@ -89,16 +85,11 @@ def vendedorprofilepage(request, id):
             context["estado"] = "no disponible"
 
     else:
-        context["estado"] = "disponible" if v.activo else "no disponible"
+        va = VendedorAmbulante.objects.get(vendedor=v)
+        context["estado"] = "disponible" if va.activo else "no disponible"
 
     context["fav"] = len(Favorito.objects.filter(vendedor=v))
     context["productos"] = Producto.objects.filter(vendedor=v)
-    categorias = dict()
-    for p in context["productos"]:
-        categorias[p.id] = p.get_categoria_display()
-    context["categorias"] = categorias
-
-    print(context)
 
     return render(request, "app/vendedor-profile-page.html", context)
 
@@ -122,12 +113,16 @@ def registrarFijo(request):
             credito = form.cleaned_data['credito']
             debito = form.cleaned_data['debito']
             junaeb = form.cleaned_data['junaeb']
-            hora_apertura=form.cleaned_data['hora_apertura']
-            hora_clausura=form.cleaned_data['hora_clausura']
+            hora_apertura = form.cleaned_data['hora_apertura']
+            hora_clausura = form.cleaned_data['hora_clausura']
             imagen = form.cleaned_data['file']
-            user = User(username=nombre, password=contrasena, email=email)
+            user = User(username=nombre, email=email)
+            user.set_password(contrasena)
             user.save()
-            vendedor=Vendedor(user=user, foto=imagen, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb, activo=True, tipo=1)
+            usuario = Usuario(user=user, foto=imagen, tipo=3)
+            usuario.save()
+            vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb,
+                                activo=True, tipo=1)
             vendedor.save()
             vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
                                         ubicacion='')
@@ -162,9 +157,13 @@ def registrarAmbulante(request):
             debito = form.cleaned_data['debito']
             junaeb = form.cleaned_data['junaeb']
             imagen = form.cleaned_data['file']
-            user = User(username=nombre, password=contrasena, email=email)
+            user = User(username=nombre, email=email)
+            user.set_password(contrasena)
             user.save()
-            vendedor=Vendedor(user=user, foto=imagen, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb, activo=True, tipo=2)
+            usuario = Usuario(user=user, foto=imagen, tipo=3)
+            usuario.save()
+            vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo,
+                                JUNAEB=junaeb, activo=True, tipo=2)
             vendedor.save()
             vendedorambulante = VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
@@ -194,9 +193,10 @@ def registrarAlumno(request):
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
             imagen = form.cleaned_data['file']
-            user = User(username=nombre, password=contrasena, email=email)
+            user = User(username=nombre, email=email)
+            user.set_password(contrasena)
             user.save()
-            alumno = Alumno(user=user, foto=imagen)
+            alumno = Usuario(user=user, foto=imagen, tipo=2)
             alumno.save()
             # redirect to a new URL:
             return render(request, "app/login.html")
@@ -219,7 +219,6 @@ def clean(self):
 
 
 def editarvendedor(request, id):
-    print("request")
     if request.method == 'POST':
         form = EditarVendedor(request.POST, request.FILES)
 
@@ -233,7 +232,7 @@ def editarvendedor(request, id):
             junaeb = form.cleaned_data["junaeb"]
             foto = form.cleaned_data["foto"]
 
-            return render(request, "app/vendedor-profile-page.html", {"id": id})
+            return vendedorprofilepage(request, id)
 
     context = dict()
     context["id"] = id
@@ -248,11 +247,11 @@ def editarvendedor(request, id):
     initial["efectivo"] = v.efectivo
     initial["junaeb"] = v.JUNAEB
 
-    initial["foto"] = v.foto
+    initial["foto"] = v.user.foto
 
-    context["tipo"] = v.tipo == 1
+    context["fijo"] = v.tipo == 1
 
-    if context["tipo"]:
+    if context["fijo"]:
         vf = VendedorFijo.objects.get(id=id)
         initial["hora_apertura"] = vf.hora_apertura
         initial["hora_clausura"] = vf.hora_clausura
@@ -279,15 +278,16 @@ def registrarProducto(request, id):
             descripcion = form.cleaned_data['descripcion']
             vendedor = Vendedor.objects.get(id=id)
             imagen = form.cleaned_data['file']
-            producto=Producto(vendedor=vendedor, foto=imagen, nombre=nombre, descripcion=descripcion, precio=precio, stock=stock,
-            categoria=1)
+            producto = Producto(vendedor=vendedor, foto=imagen, nombre=nombre, descripcion=descripcion, precio=precio,
+                                stock=stock, categoria=1)
             producto.save()
             # redirect to a new URL:
-            return render(request, "app/login.html")
+            return render(request, "app/vendedor-profile-page.html")
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ProductoForm()
+
     context = dict()
     context["id"] = id
     context["form"] = form

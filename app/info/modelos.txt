@@ -3,16 +3,14 @@ MODELOS
 clase incluida en Django
 User(username: VARCHAR, password: VARCHAR, email: VARCHAR, firstname: VARCHAR, lastname: VARCHAR)
 
-Admin(user: User, foto: Image)
-Alumno(user: User, foto: Image)
+Usuario(user: User, foto: Image, tipo: INTEGER)
 
-Vendedor(user: User, foto: Image, credito: BOOLEAN, debito: BOOLEAN, efectivo: BOOLEAN, JUNAEB: BOOLEAN,
-    activo: BOOLEAN, tipo: INTEGER)
+Vendedor(user: Usuario, credito: BOOLEAN, debito: BOOLEAN, efectivo: BOOLEAN, JUNAEB: BOOLEAN, tipo: INTEGER)
 
-VendedorAmbulante(vendedor: Vendedor)
+VendedorAmbulante(vendedor: Vendedor, activo: BOOLEAN)
 VendedorFijo(vendedor: Vendedor, hora_apertura: INTEGER, hora_clausura: INTEGER, ubicacion: VARCHAR)
 
 Producto(vendedor: Vendedor, foto: Image, nombre: VARCHAR, descripcion: VARCHAR, precio: INTEGER, stock: INTEGER,
     categoria: VARCHAR)
 
-Favorito(alumno: Alumno, vendedor: Vendedor)
+Favorito(alumno: Usuario, vendedor: Vendedor)

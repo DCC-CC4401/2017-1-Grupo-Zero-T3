@@ -1,8 +1,5 @@
 from django import forms
 
-from .models import VendedorAmbulante
-from .models import VendedorFijo
-from .models import Alumno
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="username", widget=forms.TextInput(attrs={'class': 'validate'}))
