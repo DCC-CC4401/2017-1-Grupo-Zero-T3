@@ -373,7 +373,6 @@ def editarproducto(request, id):
     if not u.is_authenticated:
         return HttpResponseRedirect("/app/")
     vendedor = producto.vendedor
-
     if vendedor.user.user.username != u.usuario.vendedor.user.user.username:
         return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
     if request.method == 'POST':
@@ -422,3 +421,16 @@ def editarproducto(request, id):
 
     context["form"] = form
     return render(request, "app/editarProducto.html", context)
+
+
+def borrarproducto(request, id):
+    producto = Producto.objects.get(id=id)
+    u = request.user
+    if not u.is_authenticated:
+        return HttpResponseRedirect("/app/")
+    vendedor = producto.vendedor
+    if vendedor.user.user.username != u.usuario.vendedor.user.user.username:
+        return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
+    else:
+        producto.delete()
+        return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))

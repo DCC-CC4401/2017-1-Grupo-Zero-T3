@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^vendedorprofilepage/(?P<id>[0-9]+)$', views.vendedorprofilepage, name='vendedorprofilepage'),
     url(r'^editarvendedor/', views.editarvendedor, name='editarvendedor'),
     url(r'^editarproducto/(?P<id>[0-9]+)$', views.editarproducto, name='editarproducto'),
+    url(r'^borrarproducto/(?P<id>[0-9]+)$', views.borrarproducto, name='borrarproducto'),
     url(r'^$', views.index, name='index'),
 ]
