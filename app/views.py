@@ -1,4 +1,5 @@
 from django.forms import forms
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from app.models import *
@@ -28,7 +29,14 @@ def login_view(request):
         print(user)
         if user is not None:
             login(request, user)
-            return render(request, "app/index.html")
+            context = dict()
+            user = Usuario.objects.get(user=user)
+            tipo = user.tipo
+            if (tipo == 2):
+                return render(request, "app/index.html")
+            if (tipo == 3):
+                context["id"] = Vendedor.objects.get(user = user).id
+                return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
         else:
             form = LoginForm()
             return render(request, "app/login.html", {'form': form})
@@ -121,14 +129,15 @@ def registrarFijo(request):
             user.save()
             usuario = Usuario(user=user, foto=imagen, tipo=3)
             usuario.save()
-            vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb,
-                                activo=True, tipo=1)
+            vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb, tipo=1)
             vendedor.save()
             vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
                                         ubicacion='')
             vendedorfijo.save()
+            context = dict()
+            context["id"] = vendedor.id
             # redirect to a new URL:
-            return render(request, "app/login.html")
+            return render(request, "app/vendedor-profile-page.html", context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -168,7 +177,7 @@ def registrarAmbulante(request):
             vendedorambulante = VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
             # redirect to a new URL:
-            return render(request, "app/login.html")
+            return render(request, "app/index.html")
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -199,7 +208,7 @@ def registrarAlumno(request):
             alumno = Usuario(user=user, foto=imagen, tipo=2)
             alumno.save()
             # redirect to a new URL:
-            return render(request, "app/login.html")
+            return render(request, "app/index.html")
 
     # if a GET (or any other method) we'll create a blank form
     else:
