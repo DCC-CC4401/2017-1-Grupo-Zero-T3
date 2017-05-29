@@ -69,12 +69,16 @@
                         </div>
                     </div>
 
-                    <div class="col l2 right-align">
-                        <a class="btn-floating activator waves-effect waves-light darken-2"
-                           href="{% url "editarvendedor" %}">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
-                    </div>
+                    {% if request.user.usuario.tipo == 3 %}
+                        {% if request.user.usuario.vendedor.id|slugify == id %}
+                            <div class="col s2 right-align">
+                                <a class="btn-floating activator waves-effect waves-light darken-2"
+                                   href="{% url "editarvendedor" %}">
+                                    <i class="material-icons">mode_edit</i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
 
 
@@ -119,12 +123,16 @@
                         </div>
                     </div>
 
-                    <div class="col s2 right-align"> <!--offset-s4-->
-                        <a class="btn-floating activator waves-effect waves-light darken-2"
-                           href="{% url "editarvendedor" %}">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
-                    </div>
+                    {% if request.user.usuario.tipo == 3 %}
+                        {% if request.user.usuario.vendedor.id|slugify == id %}
+                            <div class="col l2 right-align">
+                                <a class="btn-floating activator waves-effect waves-light darken-2"
+                                   href="{% url "editarvendedor" %}">
+                                    <i class="material-icons">mode_edit</i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
