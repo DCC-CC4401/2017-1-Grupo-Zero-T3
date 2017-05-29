@@ -123,3 +123,11 @@ class EditarVendedor(forms.Form):
     foto = forms.ImageField(required=False)
 
     password = forms.CharField(label="password", widget=forms.PasswordInput(render_value=True))
+
+class EditarProductoForm(forms.Form):
+    nombre = forms.CharField(label="nombre",
+                             widget=forms.TextInput(attrs={'class': 'validate', 'placeholder': 'pizza'}))
+    descripcion = forms.CharField(label="descripcion", widget=forms.Textarea)
+    precio = forms.IntegerField(label="precio", min_value=0)
+    stock = forms.IntegerField(label="stock", min_value=0)
+    foto = forms.ImageField(required=False)
