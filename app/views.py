@@ -134,10 +134,12 @@ def registrarFijo(request):
             vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
                                         ubicacion='')
             vendedorfijo.save()
+            user = authenticate(request, username=nombre, password=contrasena)
+            login(request, user)
             context = dict()
             context["id"] = vendedor.id
             # redirect to a new URL:
-            return render(request, "app/vendedor-profile-page.html", context)
+            return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -172,12 +174,17 @@ def registrarAmbulante(request):
             usuario = Usuario(user=user, foto=imagen, tipo=3)
             usuario.save()
             vendedor = Vendedor(user=usuario, credito=credito, debito=debito, efectivo=efectivo,
-                                JUNAEB=junaeb, activo=True, tipo=2)
+                                JUNAEB=junaeb, tipo=2)
             vendedor.save()
             vendedorambulante = VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
             # redirect to a new URL:
-            return render(request, "app/index.html")
+            user = authenticate(request, username=nombre, password=contrasena)
+            login(request, user)
+            context = dict()
+            context["id"] = vendedor.id
+            # redirect to a new URL:
+            return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -208,6 +215,8 @@ def registrarAlumno(request):
             alumno = Usuario(user=user, foto=imagen, tipo=2)
             alumno.save()
             # redirect to a new URL:
+            user = authenticate(request, username=nombre, password=contrasena)
+            login(request, user)
             return render(request, "app/index.html")
 
     # if a GET (or any other method) we'll create a blank form
