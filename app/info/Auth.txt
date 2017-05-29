@@ -1,0 +1,8 @@
+Como usar la autenticacion:
+
+El login y logout ya están implementados, y en el template base está listo el que cambie el username
+y el botón de iniciar sesión por cerrar sesión (las imágenes no, porque no están linkeadas al user).
+
+Para cualquier cosa, el ver si hay un usuario logueado se hace con request.user.is_authenticated y
+para el username es request.user.username. Se pueden usar para ejecutar bloques HTML específicos con
+{% if request.user.is_authenticated %} <HTML> {% else %} <Otro HTML> {% endif %}, por si acaso.
