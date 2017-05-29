@@ -8,7 +8,7 @@
 
             <h5 class="teal-text" style="text-align: center;">Editar Perfil</h5>
 
-            <form action='{% url "editarvendedor" id %}' enctype='multipart/form-data' method='post' id="form1"
+            <form action='{% url "editarvendedor" %}' enctype='multipart/form-data' method='post' id="form1"
                   onsubmit="console.log('holi')">
                 {% csrf_token %}
 

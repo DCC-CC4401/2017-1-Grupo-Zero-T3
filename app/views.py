@@ -239,7 +239,15 @@ def clean(self):
     return self
 
 
-def editarvendedor(request, id):
+def editarvendedor(request):
+    u = request.user
+    if not u.is_authenticated:
+        return HttpResponseRedirect("/app/")
+
+    if u.usuario.tipo != 3:
+        return HttpResponseRedirect("/app/")
+
+    id = u.usuario.vendedor.id
     error = ""
     if request.method == 'POST':
         form = EditarVendedor(request.POST, request.FILES)

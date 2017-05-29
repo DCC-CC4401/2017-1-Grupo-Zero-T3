@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^registrarProducto/(?P<id>[0-9]+)$', views.registrarProducto, name='registrarProducto'),
     url(r'^gestionproductos/(?P<id>[0-9]+)$', views.gestionproductos, name='gestionproductos'),
     url(r'^vendedorprofilepage/(?P<id>[0-9]+)$', views.vendedorprofilepage, name='vendedorprofilepage'),
-    url(r'^editarvendedor/(?P<id>[0-9]+)$', views.editarvendedor, name='editarvendedor'),
+    url(r'^editarvendedor/', views.editarvendedor, name='editarvendedor'),
     url(r'^$', views.index, name='index'),
 ]
