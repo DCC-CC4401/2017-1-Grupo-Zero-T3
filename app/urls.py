@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^gestionproductos/(?P<id>[0-9]+)$', views.gestionproductos, name='gestionproductos'),
     url(r'^vendedorprofilepage/(?P<id>[0-9]+)$', views.vendedorprofilepage, name='vendedorprofilepage'),
     url(r'^editarvendedor/', views.editarvendedor, name='editarvendedor'),
+    url(r'^editarproducto/(?P<id>[0-9]+)$', views.editarproducto, name='editarproducto'),
     url(r'^$', views.index, name='index'),
 ]

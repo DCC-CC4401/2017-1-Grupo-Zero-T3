@@ -365,3 +365,60 @@ def registrarProducto(request, id):
     context["id"] = id
     context["form"] = form
     return render(request, "app/gestion-productos.html", context)
+
+
+def editarproducto(request, id):
+    producto = Producto.objects.get(id=id)
+    u = request.user
+    if not u.is_authenticated:
+        return HttpResponseRedirect("/app/")
+    vendedor = producto.vendedor
+
+    if vendedor.user.user.username != u.usuario.vendedor.user.user.username:
+        return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
+    if request.method == 'POST':
+        form = EditarProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            nombre = form.cleaned_data["nombre"]
+            descripcion = form.cleaned_data["descripcion"]
+            precio = form.cleaned_data["precio"]
+            stock = form.cleaned_data["stock"]
+            foto = form.cleaned_data["foto"]
+            if foto != None:
+                producto.foto = foto
+                producto.save()
+            producto.nombre = nombre
+            producto.descripcion = descripcion
+            producto.precio = precio
+            producto.stock = stock
+            producto.save()
+            context = context_vendedor(producto.vendedor.id)
+            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id), context)
+
+
+        context = dict()
+        context["id"] = id
+        context["form"] = form
+        return render(request, "app/editarproducto.html", context)
+
+    context = dict()
+    context["id"] = id
+
+    initial = dict()
+
+    initial["nombre"] = producto.nombre
+
+    initial["precio"] = producto.precio
+
+    initial["foto"] = producto.foto
+
+    initial["stock"] = producto.stock
+
+    initial["descripcion"] = producto.descripcion
+
+    initial["foto"] = producto.foto
+
+    form = EditarProductoForm(initial=initial)
+
+    context["form"] = form
+    return render(request, "app/editarProducto.html", context)
