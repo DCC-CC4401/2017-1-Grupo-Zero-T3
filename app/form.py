@@ -16,20 +16,24 @@ class VendedorAmbulanteForm(forms.Form):
                ('Efectivo', 'Efectivo'),
                ('JUNAEB', 'JUNAEB'))
     credito = forms.BooleanField(
-        label='Credito',
-        initial=True
+        label='credito',
+        required=False,
+        initial=False
     )
     efectivo = forms.BooleanField(
-        label='Efectivo',
+        label='efectivo',
+        required=False,
         initial=True
     )
     debito = forms.BooleanField(
-        label='Debito',
-        initial=True
+        label='debito',
+        required=False,
+        initial=False
     )
     junaeb = forms.BooleanField(
         label='JUNAEB',
-        initial=True
+        required=False,
+        initial=False
     )
 
 
@@ -44,30 +48,40 @@ class VendedorFijoForm(forms.Form):
                ('Efectivo', 'Efectivo'),
                ('JUNAEB', 'JUNAEB'))
     credito = forms.BooleanField(
-        label='Credito',
+        label='credito',
+        required=False,
         initial=False
     )
     efectivo = forms.BooleanField(
-        label='Efectivo',
-        initial=False
+        label='efectivo',
+        required=False,
+        initial=True
     )
     debito = forms.BooleanField(
-        label='Debito',
+        label='debito',
+        required=False,
         initial=False
     )
     junaeb = forms.BooleanField(
         label='JUNAEB',
+        required=False,
         initial=False
     )
     hora_apertura = forms.CharField(label="hora_apertura", widget=forms.TextInput(attrs={'class': 'validate'}))
     hora_clausura = forms.CharField(label="hora_clausura", widget=forms.TextInput(attrs={'class': 'validate'}))
-
 
 class AlumnoForm(forms.Form):
     nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class': 'validate'}))
     password = forms.CharField(label="password", widget=forms.PasswordInput(render_value=True))
     password2 = forms.CharField(label="password2", widget=forms.PasswordInput(render_value=True))
     email = forms.CharField(label="email", widget=forms.EmailInput(attrs={'class': 'validate'}))
+    file = forms.FileField()
+
+class ProductoForm(forms.Form):
+    nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class':'validate', 'placeholder':'pizza'}))
+    descripcion = forms.CharField(label="descripcion", widget=forms.Textarea)
+    precio = forms.IntegerField(label="precio")
+    stock = forms.IntegerField(label="stock")
     file = forms.FileField()
 
 

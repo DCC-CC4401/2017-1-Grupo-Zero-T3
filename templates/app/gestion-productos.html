@@ -13,14 +13,17 @@
             <div class="z-depth-1 grey lighten-4"
                  style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
 
-                <form action="{% url 'vendedorprofilepage' id %}" method="post">
+                <form enctype="multipart/form-data" action="{% url 'registrarProducto' id %}" method="post">
                     {% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
 
                     <div class='row'>
                         <div class='input-field col s12'>
                             Nombre del producto:
                             <div class="input-field inline ">
-                                <input placeholder="Pizza" class='validate' type='text' name='item' id='item'/>
+                                {{ form.nombre.errors }}
+                                {{ form.nombre }}
                                 <label style="text-align: center" for='item'></label>
                             </div>
                         </div>
@@ -30,7 +33,8 @@
                         <div class='input-field col s12'>
                             Precio del producto:
                             <div class="input-field inline">
-                                <input placeholder="1300" class='validate' type='text' name='precio' id='precio'/>
+                                {{ form.precio.errors }}
+                                {{ form.precio }}
                                 <label style="text-align: center" for='precio'></label>
                             </div>
                         </div>
@@ -39,7 +43,8 @@
                         <div class='input-field col s12'>
                             Stock del producto:
                             <div class="input-field inline">
-                                <input placeholder="42" class='validate' type='text' name='stock' id='stock'/>
+                                {{ form.stock.errors }}
+                                {{ form.stock }}
                                 <label style="text-align: center" for='stock'></label>
                             </div>
                         </div>
@@ -47,11 +52,12 @@
                     <div class="row">
                         <div class='input-field col s12'>
                             <i class="material-icons">mode_edit</i> Descripción
-                            <textarea name="descripcion" id="descripcion" class="materialize-textarea"></textarea>
+                            {{ form.descripcion.errors }}
+                            {{ form.descripcion }}
                         </div>
                     </div>
 
-                    <div class="row">
+                    <!--div class="row">
                         Selecciona una imagen previa:
                     </div>
                     <div class="row">
@@ -113,13 +119,15 @@
 
                         <input class="with-gap" name="imagen_previa" type="radio" id="test19"/>
                         <label for="test19"><img style="max-width: 50px;" src="{% static "img/rice.png" %}"></label>
-                    </div>
+                    </div-->
 
                     <div class="row valign-wrapper" id="file-upload">
                         <div class="col s3">
                             <p class="center">Imagen del producto:</p>
                         </div>
-                        <div class="col s9">
+                        {{ form.file.errors }}
+                        {{ form.file }}
+                        <!--div class="col s9">
                             <div class="dropify-wrapper touch-fallback">
                                 <div class="dropify-message">
                                     <p class="center">
@@ -143,7 +151,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div-->
                     </div>
 
                     <div class='row'>

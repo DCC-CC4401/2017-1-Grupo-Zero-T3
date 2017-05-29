@@ -2,7 +2,7 @@ from django.forms import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from app.models import *
-from app.form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm, EditarVendedor
+from app.form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm, EditarVendedor, ProductoForm
 import time
 
 
@@ -93,13 +93,16 @@ def registrarFijo(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
-            hora_apertura = form.cleaned_data['hora_apertura']
-            hora_clausura = form.cleaned_data['hora_clausura']
+            efectivo = form.cleaned_data['efectivo']
+            credito = form.cleaned_data['credito']
+            debito = form.cleaned_data['debito']
+            junaeb = form.cleaned_data['junaeb']
+            hora_apertura=form.cleaned_data['hora_apertura']
+            hora_clausura=form.cleaned_data['hora_clausura']
             imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor = Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True,
-                                activo=True, tipo=1)
+            vendedor=Vendedor(user=user, foto=imagen, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb, activo=True, tipo=1)
             vendedor.save()
             vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
                                         ubicacion='')
@@ -129,11 +132,14 @@ def registrarAmbulante(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
+            efectivo = form.cleaned_data['efectivo']
+            credito = form.cleaned_data['credito']
+            debito = form.cleaned_data['debito']
+            junaeb = form.cleaned_data['junaeb']
             imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor = Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True,
-                                activo=True, tipo=2)
+            vendedor=Vendedor(user=user, foto=imagen, credito=credito, debito=debito, efectivo=efectivo, JUNAEB=junaeb, activo=True, tipo=2)
             vendedor.save()
             vendedorambulante = VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
@@ -212,3 +218,35 @@ def editar_vendedor(request, id):
 
     context["form"] = form
     return render(request, "app/editar-vendedor.html", context)
+
+
+def registrarProducto(request, id):
+    # if this is a POST request we need to process the form data
+
+    if request.method == 'POST':
+
+        # create a form instance and populate it with data from the request:
+        form = ProductoForm(request.POST, request.FILES)
+        # check whether it's valid:
+        print(form.is_valid())
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            nombre = form.cleaned_data['nombre']
+            precio = form.cleaned_data['precio']
+            stock = form.cleaned_data['stock']
+            descripcion = form.cleaned_data['descripcion']
+            vendedor = Vendedor.objects.get(id=id)
+            imagen = form.cleaned_data['file']
+            producto=Producto(vendedor=vendedor, foto=imagen, nombre=nombre, descripcion=descripcion, precio=precio, stock=stock,
+            categoria=1)
+            producto.save()
+            # redirect to a new URL:
+            return render(request, "app/login.html")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ProductoForm()
+    context = dict()
+    context["id"] = id
+    context["form"] = form
+    return render(request, "app/gestion-productos.html", context)
