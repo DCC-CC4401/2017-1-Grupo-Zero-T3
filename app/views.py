@@ -38,8 +38,8 @@ def login_view(request):
             if (tipo == 2):
                 return render(request, "app/index.html")
             if (tipo == 3):
-                context["id"] = Vendedor.objects.get(user = user).id
-                return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
+                context["id"] = Vendedor.objects.get(user=user).id
+                return HttpResponseRedirect("/app/vendedorprofilepage/" + str(context["id"]), context)
         else:
             form = LoginForm()
             return render(request, "app/login.html", {'form': form})
@@ -63,6 +63,11 @@ def gestionproductos(request, id):
 
 
 def vendedorprofilepage(request, id):
+    context = context_vendedor(id)
+    return render(request, "app/vendedor-profile-page.html", context)
+
+
+def context_vendedor(id):
     context = dict()
     context["id"] = id
 
@@ -101,7 +106,7 @@ def vendedorprofilepage(request, id):
     context["fav"] = len(Favorito.objects.filter(vendedor=v))
     context["productos"] = Producto.objects.filter(vendedor=v)
 
-    return render(request, "app/vendedor-profile-page.html", context)
+    return context
 
 
 def registrarFijo(request):
@@ -137,7 +142,8 @@ def registrarFijo(request):
                                         ubicacion='')
             vendedorfijo.save()
             # redirect to a new URL:
-            return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
+            context = context_vendedor(vendedor.id)
+            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(context["id"]), context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -179,10 +185,9 @@ def registrarAmbulante(request):
             # redirect to a new URL:
             user = authenticate(request, username=nombre, password=contrasena)
             login(request, user)
-            context = dict()
-            context["id"] = vendedor.id
+            context = context_vendedor(vendedor.id)
             # redirect to a new URL:
-            return HttpResponseRedirect("/app/vendedorprofilepage/"+str(context["id"]), context)
+            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(context["id"]), context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -248,9 +253,13 @@ def editarvendedor(request, id):
             junaeb = form.cleaned_data["junaeb"]
             foto = form.cleaned_data["foto"]
 
-            u = User.objects.get()
+            user = User.objects.get()
+            usuario = Usuario.objects.get(user=user)
+            vendedor = Vendedor.objects.get(user=usuario)
 
-            return vendedorprofilepage(request, id)
+
+            context = context_vendedor(vendedor.id)
+            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id), context)
 
     context = dict()
     context["id"] = id
@@ -300,7 +309,8 @@ def registrarProducto(request, id):
                                 stock=stock, categoria=1)
             producto.save()
             # redirect to a new URL:
-            return render(request, "app/vendedor-profile-page.html")
+            context = context_vendedor(id)
+            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id), context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
