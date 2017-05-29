@@ -1,8 +1,9 @@
 from django.forms import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
 from app.models import *
-from app.form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm, EditarVendedor, ProductoForm
+from app.form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm, EditarVendedor, ProductoForm, LoginForm
 import time
 
 
@@ -10,9 +11,33 @@ import time
 def index(request):
     return render(request, "app/index.html")
 
+def logout_view(request):
+    logout(request)
+    return render(request, "app/index.html")
 
-def login(request):
-    return render(request, "app/login.html")
+def login_view(request):
+    # create a form instance and populate it with data from the request:
+    form = LoginForm(request.POST, request.FILES)
+    # check whether it's valid:
+    print(form.is_valid())
+    if form.is_valid():
+        # process the data in form.cleaned_data as required
+        # form = clean(form)
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return render(request, "app/index.html")
+        else:
+            form = LoginForm()
+            return render(request, "app/login.html", {'form': form})
+    else:
+        form = LoginForm()
+        return render(request, 'app/login.html', {'form': form})
+
+# def login_view(request):
+#    return render(request, "app/login.html")
 
 
 def signup(request):

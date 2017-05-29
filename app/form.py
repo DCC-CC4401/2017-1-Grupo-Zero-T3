@@ -4,6 +4,10 @@ from .models import VendedorAmbulante
 from .models import VendedorFijo
 from .models import Alumno
 
+class LoginForm(forms.Form):
+    username = forms.CharField(label="username", widget=forms.TextInput(attrs={'class': 'validate'}))
+    password = forms.CharField(label="password", widget=forms.PasswordInput(render_value=False))
+
 
 class VendedorAmbulanteForm(forms.Form):
     nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class': 'validate'}))
