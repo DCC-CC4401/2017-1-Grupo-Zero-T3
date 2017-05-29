@@ -92,10 +92,26 @@ class EditarVendedor(forms.Form):
     hora_apertura = forms.TimeField(widget=forms.TimeInput(format='%H:%M'))
     hora_clausura = forms.TimeField(widget=forms.TimeInput(format='%H:%M'))
 
-    credito = forms.BooleanField(label='Credito', initial=False)
-    efectivo = forms.BooleanField(label='Efectivo', initial=False)
-    debito = forms.BooleanField(label='Debito', initial=False)
-    junaeb = forms.BooleanField(label='JUNAEB', initial=False)
+    credito = forms.BooleanField(
+        label='credito',
+        required=False,
+        initial=False
+    )
+    efectivo = forms.BooleanField(
+        label='efectivo',
+        required=False,
+        initial=True
+    )
+    debito = forms.BooleanField(
+        label='debito',
+        required=False,
+        initial=False
+    )
+    junaeb = forms.BooleanField(
+        label='JUNAEB',
+        required=False,
+        initial=False
+    )
 
     foto = forms.ImageField()
 
