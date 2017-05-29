@@ -182,6 +182,7 @@ def registrarAlumno(request):
 
     return render(request, 'app/signupAlumno.html', {'form': form})
 
+
 def clean(self):
     password1 = self.cleaned_data.get('password')
     password2 = self.cleaned_data.get('password2')
@@ -191,7 +192,24 @@ def clean(self):
 
     return self
 
-def editar_vendedor(request, id):
+
+def editarvendedor(request, id):
+    print("request")
+    if request.method == 'POST':
+        form = EditarVendedor(request.POST, request.FILES)
+
+        if form.is_valid():
+            nombre = form.cleaned_data["nombre"]
+            hora_apertura = form.cleaned_data["hora_apertura"]
+            hora_clausura = form.cleaned_data["hora_clausura"]
+            credito = form.cleaned_data["credito"]
+            debito = form.cleaned_data["debito"]
+            efectivo = form.cleaned_data["efectivo"]
+            junaeb = form.cleaned_data["junaeb"]
+            foto = form.cleaned_data["foto"]
+
+            return render(request, "app/vendedor-profile-page.html", {"id": id})
+
     context = dict()
     context["id"] = id
 
@@ -210,7 +228,7 @@ def editar_vendedor(request, id):
     context["tipo"] = v.tipo == 1
 
     if context["tipo"]:
-        vf = VendedorFijo.objects.get(id = id)
+        vf = VendedorFijo.objects.get(id=id)
         initial["hora_apertura"] = vf.hora_apertura
         initial["hora_clausura"] = vf.hora_clausura
 
