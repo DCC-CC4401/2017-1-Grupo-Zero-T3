@@ -240,6 +240,7 @@ def clean(self):
 
 
 def editarvendedor(request, id):
+    error = ""
     if request.method == 'POST':
         form = EditarVendedor(request.POST, request.FILES)
 
@@ -253,13 +254,49 @@ def editarvendedor(request, id):
             junaeb = form.cleaned_data["junaeb"]
             foto = form.cleaned_data["foto"]
 
-            user = User.objects.get()
-            usuario = Usuario.objects.get(user=user)
-            vendedor = Vendedor.objects.get(user=usuario)
+            password = form.cleaned_data["password"]
 
+            user = Vendedor.objects.get(id=id).user.user
 
-            context = context_vendedor(vendedor.id)
-            return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id), context)
+            print(foto)
+
+            aut = authenticate(request, username=user.username, password=password)
+            if aut is not None:
+                user.username = nombre
+                user.save()
+
+                usuario = Usuario.objects.get(user=user)
+                if foto != None:
+                    usuario.foto = foto
+                    usuario.save()
+
+                vendedor = Vendedor.objects.get(user=usuario)
+                vendedor.credito = credito
+                vendedor.debito = debito
+                vendedor.efectivo = efectivo
+                vendedor.junaeb = junaeb
+                vendedor.save()
+
+                if vendedor.tipo == 1:
+                    vf = VendedorFijo.objects.get(vendedor=vendedor)
+                    vf.hora_apertura = hora_apertura
+                    vf.hora_clausura = hora_clausura
+                    vf.save()
+
+                context = context_vendedor(vendedor.id)
+                return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id), context)
+
+            error = "Error: contraseña incorrecta"
+
+        context = dict()
+        context["id"] = id
+        v = Vendedor.objects.get(id=id)
+
+        context["fijo"] = v.tipo == 1
+        context["form"] = form
+        context["error"] = error
+        return render(request, "app/editar-vendedor.html", context)
+
 
     context = dict()
     context["id"] = id

@@ -95,36 +95,31 @@ class ProductoForm(forms.Form):
 
 class EditarVendedor(forms.Form):
     nombre = forms.CharField(label="nombre", widget=forms.TextInput(attrs={'class': 'validate'}))
-    user_id = forms.IntegerField(label="user_id", widget=forms.HiddenInput())
 
     hora_apertura = forms.TimeField(label="hora apertura",
                                     widget=forms.TimeInput(format="%H:%M", attrs={"type": "time"}),
-                                    initial="10:00")
+                                    required=False)
     hora_clausura = forms.TimeField(label="hora clausura",
                                     widget=forms.TimeInput(format="%H:%M", attrs={"type": "time"}),
-                                    initial="12:00")
+                                    required=False)
 
     credito = forms.BooleanField(
         label='credito',
-        required=False,
-        initial=False
+        required=False
     )
     efectivo = forms.BooleanField(
         label='efectivo',
-        required=False,
-        initial=True
+        required=False
     )
     debito = forms.BooleanField(
         label='debito',
-        required=False,
-        initial=False
+        required=False
     )
     junaeb = forms.BooleanField(
         label='JUNAEB',
-        required=False,
-        initial=False
+        required=False
     )
 
-    foto = forms.ImageField()
+    foto = forms.ImageField(required=False)
 
     password = forms.CharField(label="password", widget=forms.PasswordInput(render_value=True))
