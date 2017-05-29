@@ -76,7 +76,7 @@ class VendedorFijo(models.Model):
     ubicacion = models.CharField(max_length=60)
 
     def __str__(self):
-        return "Vendedor Ambulante: " + str(self.vendedor)
+        return "Vendedor Fijo: " + str(self.vendedor)
 
     def pagos(self):
         return self.vendedor.pagos()

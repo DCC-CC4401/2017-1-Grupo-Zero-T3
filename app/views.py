@@ -2,7 +2,7 @@ from django.forms import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from app.models import *
-from .form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm
+from app.form import VendedorFijoForm, VendedorAmbulanteForm, AlumnoForm, EditarVendedor
 import time
 
 
@@ -93,14 +93,16 @@ def registrarFijo(request):
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             contrasena = form.cleaned_data['password']
-            hora_apertura=form.cleaned_data['hora_apertura']
-            hora_clausura=form.cleaned_data['hora_clausura']
+            hora_apertura = form.cleaned_data['hora_apertura']
+            hora_clausura = form.cleaned_data['hora_clausura']
             imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=1)
+            vendedor = Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True,
+                                activo=True, tipo=1)
             vendedor.save()
-            vendedorfijo=VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura, ubicacion='')
+            vendedorfijo = VendedorFijo(vendedor=vendedor, hora_apertura=hora_apertura, hora_clausura=hora_clausura,
+                                        ubicacion='')
             vendedorfijo.save()
             # redirect to a new URL:
             return render(request, "app/login.html")
@@ -130,9 +132,10 @@ def registrarAmbulante(request):
             imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            vendedor=Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True, activo=True, tipo=2)
+            vendedor = Vendedor(user=user, foto=imagen, credito=True, debito=True, efectivo=True, JUNAEB=True,
+                                activo=True, tipo=2)
             vendedor.save()
-            vendedorambulante=VendedorAmbulante(vendedor=vendedor)
+            vendedorambulante = VendedorAmbulante(vendedor=vendedor)
             vendedorambulante.save()
             # redirect to a new URL:
             return render(request, "app/login.html")
@@ -162,7 +165,7 @@ def registrarAlumno(request):
             imagen = form.cleaned_data['file']
             user = User(username=nombre, password=contrasena, email=email)
             user.save()
-            alumno=Alumno(user=user, foto=imagen)
+            alumno = Alumno(user=user, foto=imagen)
             alumno.save()
             # redirect to a new URL:
             return render(request, "app/login.html")
@@ -181,3 +184,31 @@ def clean(self):
         raise forms.ValidationError("Passwords don't match")
 
     return self
+
+def editar_vendedor(request, id):
+    context = dict()
+    context["id"] = id
+
+    v = Vendedor.objects.get(id=id)
+    initial = dict()
+
+    initial["nombre"] = v.user.username
+
+    initial["debito"] = v.debito
+    initial["credito"] = v.credito
+    initial["efectivo"] = v.efectivo
+    initial["junaeb"] = v.JUNAEB
+
+    initial["foto"] = v.foto
+
+    context["tipo"] = v.tipo == 1
+
+    if context["tipo"]:
+        vf = VendedorFijo.objects.get(id = id)
+        initial["hora_apertura"] = vf.hora_apertura
+        initial["hora_clausura"] = vf.hora_clausura
+
+    form = EditarVendedor(initial=initial)
+
+    context["form"] = form
+    return render(request, "app/editar-vendedor.html", context)

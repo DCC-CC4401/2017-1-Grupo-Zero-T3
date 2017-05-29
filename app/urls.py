@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^registrarAlumno/', views.registrarAlumno, name='registrarAlumno'),
     url(r'^gestionproductos/(?P<id>[0-9]+)$', views.gestionproductos, name='gestionproductos'),
     url(r'^vendedorprofilepage/(?P<id>[0-9]+)$', views.vendedorprofilepage, name='vendedorprofilepage'),
+    url(r'^editarvendedor/(?P<id>[0-9]+)$', views.editar_vendedor, name='editarvendedor'),
     url(r'^$', views.index, name='index'),
 ]
