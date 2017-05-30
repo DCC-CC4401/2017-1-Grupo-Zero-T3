@@ -367,7 +367,7 @@ def editarvendedor(request):
     context["fijo"] = v.tipo == 1
 
     if context["fijo"]:
-        vf = VendedorFijo.objects.get(id=id)
+        vf = VendedorFijo.objects.get(vendedor=v)
         initial["hora_apertura"] = vf.hora_apertura
         initial["hora_clausura"] = vf.hora_clausura
 
