@@ -65,13 +65,17 @@
                                           style="font-size:24px; line-height:35px;">{{ fav }}</span>
                                 </label>
                             </div>
-                        {% if request.user.usuario.tipo == 2 %}
-                            {% if favorite %}
-                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'deletefav' id %}"> Quitar </a>
-                            {% else %}
-                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'addfav' id %}"> Agregar </a>
+                            {% if request.user.usuario.tipo == 2 %}
+                                {% if favorite %}
+                                    <a class="col s8 offset-s2 btn btn-small waves-effect red" href="{% url 'deletefav' id %}">
+                                        Quitar
+                                    </a>
+                                {% else %}
+                                    <a class="col s8 offset-s2 btn btn-small waves-effect green" href="{% url 'addfav' id %}">
+                                        Agregar
+                                    </a>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
                         </div>
                     </div>
 
@@ -117,13 +121,17 @@
                                 <span class=" grey-text flow-text text-darken-4"
                                       style="font-size:22px; line-height:25px;">{{ fav }}</span>
                             </h6>
-                        {% if request.user.usuario.tipo == 2 %}
-                            {% if favorite %}
-                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'deletefav' id %}"> Quitar </a>
-                            {% else %}
-                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'addfav' id %}"> Agregar </a>
+                            {% if request.user.usuario.tipo == 2 %}
+                                {% if favorite %}
+                                    <a class="col s6 offset-s3 btn btn-small waves-effect teal" href="{% url 'deletefav' id %}">
+                                        Quitar
+                                    </a>
+                                {% else %}
+                                    <a class="col s6 offset-s3 btn btn-small waves-effect teal" href="{% url 'addfav' id %}">
+                                        Agregar
+                                    </a>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
                         </div>
 
                         <div class="col s5 offset-s1 center">
@@ -209,7 +217,7 @@
                                     </div>
 
 
-                                        <div class="card-reveal">
+                                    <div class="card-reveal">
                                         <span class="card-title grey-text text-darken-4">
                                             {{ producto.nombre|capfirst }}
                                             <i class="material-icons right">close</i>
