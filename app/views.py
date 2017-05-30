@@ -86,20 +86,22 @@ def addfav(request, id_add):
     q.save()
     return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id_add))
 
+
 def deletefav(request, id_delete):
     q = Favorito.objects.filter(alumno=request.user.usuario,
                                 vendedor=Vendedor.objects.get(id=id_delete))
     q.delete()
     return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id_delete))
 
+
 def vendedorprofilepage(request, id):
     context = context_vendedor(id)
     if request.user.is_authenticated:
         if request.user.usuario.tipo == 2:
             context['favorite'] = Favorito.objects.filter(alumno=request.user.usuario,
-                                                             vendedor=Vendedor.objects.get(id=context["id"])).exists()
+                                                          vendedor=Vendedor.objects.get(id=context["id"])).exists()
         elif request.user.usuario.tipo == 3:
-            ambulante =  VendedorAmbulante.objects.filter(vendedor=Vendedor.objects.get(user=request.user.usuario))
+            ambulante = VendedorAmbulante.objects.filter(vendedor=Vendedor.objects.get(user=request.user.usuario))
             if ambulante.exists():
                 context['ambulante'] = True
                 context['ambul_activo'] = ambulante.first().activo
@@ -309,19 +311,16 @@ def editarvendedor(request):
             efectivo = form.cleaned_data["efectivo"]
             junaeb = form.cleaned_data["junaeb"]
             foto = form.cleaned_data["foto"]
-
             password = form.cleaned_data["password"]
 
             user = Vendedor.objects.get(id=id).user.user
-
-            print(foto)
-
             aut = authenticate(request, username=user.username, password=password)
+
             if aut is not None:
                 user.username = nombre
                 user.save()
-
                 usuario = Usuario.objects.get(user=user)
+
                 if foto != None:
                     usuario.foto = foto
                     usuario.save()
@@ -346,27 +345,23 @@ def editarvendedor(request):
 
         context = dict()
         context["id"] = id
-        v = Vendedor.objects.get(id=id)
 
+        v = Vendedor.objects.get(id=id)
         context["fijo"] = v.tipo == 1
         context["form"] = form
         context["error"] = error
         return render(request, "app/editar-vendedor.html", context)
-
 
     context = dict()
     context["id"] = id
 
     v = Vendedor.objects.get(id=id)
     initial = dict()
-
     initial["nombre"] = v.user.username
-
     initial["debito"] = v.debito
     initial["credito"] = v.credito
     initial["efectivo"] = v.efectivo
     initial["junaeb"] = v.JUNAEB
-
     initial["foto"] = v.user.foto
 
     context["fijo"] = v.tipo == 1
@@ -377,7 +372,6 @@ def editarvendedor(request):
         initial["hora_clausura"] = vf.hora_clausura
 
     form = EditarVendedor(initial=initial)
-
     context["form"] = form
     return render(request, "app/editar-vendedor.html", context)
 
@@ -385,7 +379,6 @@ def editarvendedor(request):
 def registrarProducto(request, id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
-
         # create a form instance and populate it with data from the request:
         form = ProductoForm(request.POST, request.FILES)
         # check whether it's valid:
@@ -420,28 +413,31 @@ def editarproducto(request, id):
     u = request.user
     if not u.is_authenticated:
         return HttpResponseRedirect("/app/")
+
     vendedor = producto.vendedor
     if vendedor.user.user.username != u.usuario.vendedor.user.user.username:
         return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
+
     if request.method == 'POST':
         form = EditarProductoForm(request.POST, request.FILES)
+
         if form.is_valid():
             nombre = form.cleaned_data["nombre"]
             descripcion = form.cleaned_data["descripcion"]
             precio = form.cleaned_data["precio"]
             stock = form.cleaned_data["stock"]
             foto = form.cleaned_data["foto"]
-            if foto != None:
+
+            if foto is not None:
                 producto.foto = foto
-                producto.save()
             producto.nombre = nombre
             producto.descripcion = descripcion
             producto.precio = precio
             producto.stock = stock
             producto.save()
+
             context = context_vendedor(producto.vendedor.id)
             return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id), context)
-
 
         context = dict()
         context["id"] = id
@@ -452,21 +448,14 @@ def editarproducto(request, id):
     context["id"] = id
 
     initial = dict()
-
     initial["nombre"] = producto.nombre
-
     initial["precio"] = producto.precio
-
     initial["foto"] = producto.foto
-
     initial["stock"] = producto.stock
-
     initial["descripcion"] = producto.descripcion
-
     initial["foto"] = producto.foto
 
     form = EditarProductoForm(initial=initial)
-
     context["form"] = form
     return render(request, "app/editarProducto.html", context)
 
@@ -474,14 +463,16 @@ def editarproducto(request, id):
 def borrarproducto(request, id):
     producto = Producto.objects.get(id=id)
     u = request.user
+
     if not u.is_authenticated:
         return HttpResponseRedirect("/app/")
+
     vendedor = producto.vendedor
     if vendedor.user.user.username != u.usuario.vendedor.user.user.username:
         return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
-    else:
-        producto.delete()
-        return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
+
+    producto.delete()
+    return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
 
 
 def venderproducto(request, id):
@@ -498,7 +489,7 @@ def venderproducto(request, id):
         return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
 
     if producto.stock > 0:
-        producto.stock = producto.stock-1
+        producto.stock = producto.stock - 1
         producto.save()
         venta = Venta(producto=producto, precio=producto.precio, fecha=datetime.datetime.now())
         venta.save()
