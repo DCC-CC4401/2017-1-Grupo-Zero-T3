@@ -434,3 +434,17 @@ def borrarproducto(request, id):
     else:
         producto.delete()
         return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
+
+
+def venderproducto(request, id):
+    producto = Producto.objects.get(id=id)
+    u = request.user
+    if not u.is_authenticated:
+        return HttpResponseRedirect("/app/")
+    vendedor = producto.vendedor
+    if vendedor.user.user.username != u.usuario.vendedor.user.user.username:
+        return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
+    producto.stock = producto.stock-1
+    producto.save()
+    print (producto.stock)
+    return HttpResponseRedirect("/app/vendedorprofilepage/" + str(u.usuario.vendedor.id))
