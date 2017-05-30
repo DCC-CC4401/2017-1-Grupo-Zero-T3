@@ -1,0 +1,16 @@
+MODELOS
+
+clase incluida en Django
+User(username: VARCHAR, password: VARCHAR, email: VARCHAR)
+
+Usuario(user: User, foto: Image, tipo: INTEGER)
+
+Vendedor(user: Usuario, credito: BOOLEAN, debito: BOOLEAN, efectivo: BOOLEAN, JUNAEB: BOOLEAN, tipo: INTEGER)
+
+VendedorAmbulante(vendedor: Vendedor, activo: BOOLEAN)
+VendedorFijo(vendedor: Vendedor, hora_apertura: Time, hora_clausura: Time, ubicacion: VARCHAR)
+
+Producto(vendedor: Vendedor, foto: Image, nombre: VARCHAR, descripcion: VARCHAR, precio: INTEGER, stock: INTEGER,
+    categoria: VARCHAR)
+
+Favorito(alumno: Usuario, vendedor: Vendedor)

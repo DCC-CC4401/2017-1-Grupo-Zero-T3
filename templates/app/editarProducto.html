@@ -1,0 +1,93 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block content %}
+
+    <main>
+        <div class="section"></div>
+
+        <h4 class="teal-text" style="text-align: center;">Editar Producto</h4>
+        <div class="section"></div>
+
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4"
+                 style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
+
+                <form enctype="multipart/form-data" action="{% url 'editarproducto' id %}" method="post">
+                    {% csrf_token %}
+
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+
+                    <div class='row s12'>
+                        <div class='input-field col s12'>
+                            {{ form.user_id }}
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            Nombre del producto:
+                            <div class="input-field inline ">
+                                {{ form.nombre.errors }}
+                                {{ form.nombre }}
+                                <label style="text-align: center" for='item'></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            Precio del producto:
+                            <div class="input-field inline">
+                                {{ form.precio.errors }}
+                                {{ form.precio }}
+                                <label style="text-align: center" for='precio'></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            Stock del producto:
+                            <div class="input-field inline">
+                                {{ form.stock.errors }}
+                                {{ form.stock }}
+                                <label style="text-align: center" for='stock'></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='input-field col s12'>
+                            <i class="material-icons">mode_edit</i> Descripción
+                            {{ form.descripcion.errors }}
+                            {{ form.descripcion }}
+                        </div>
+                    </div>
+
+                    <div class="row valign-wrapper" id="file-upload">
+                        <div class="col s12">
+                            <p>Imagen del producto:</p>
+
+                            {{ form.foto.errors }}
+                            {{ form.foto }}
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <button type="submit" class='col s3 offset-s2 btn btn-large waves-effect button teal'>
+                            Editar <i class="material-icons right">send</i>
+                        </button>
+
+                        <a class='col s3 offset-s2 btn btn-large waves-effect button red'
+                           href="{% url "borrarproducto" id %}">
+                            Eliminar Producto <i class="material-icons right">delete</i>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </main>
+{% endblock %}

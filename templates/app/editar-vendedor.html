@@ -1,0 +1,99 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+    <main>
+        <div class="section"></div>
+        <div class="z-depth-1 grey lighten-4 row"
+             style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+            <h5 class="teal-text" style="text-align: center;">Editar Perfil</h5>
+
+            <form action='{% url "editarvendedor" %}' enctype='multipart/form-data' method='post' id="form1"
+                  onsubmit="console.log('holi')">
+                {% csrf_token %}
+
+                <div class="row"></div>
+
+                <div class='red-text center'>
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                    {{ error }}
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        {{ form.nombre.errors }}
+                        {{ form.nombre }}
+                        <label style="text-align: center" for='nombre'>Nombre</label>
+                    </div>
+                </div>
+
+                {% if fijo %}
+                    <div class="row">
+                        <div class="col s6">Hora apertura</div>
+                        <div class="col s6">Hora clausura</div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">alarm</i>
+                            {{ form.hora_apertura.errors }}
+                            {{ form.hora_apertura }}
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">alarm</i>
+                            {{ form.hora_clausura.errors }}
+                            {{ form.hora_clausura }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        Editar sus formas de pago:
+                        <p>
+                            {{ form.efectivo }}{{ form.efectivo.label_tag }}
+                            {{ form.efectivo.errors }}
+                        </p>
+                        <p>
+                            {{ form.credito }}{{ form.credito.label_tag }}
+                            {{ form.credito.errors }}
+                        </p>
+                        <p>
+                            {{ form.debito }}{{ form.debito.label_tag }}
+                            {{ form.debito.errors }}
+                        </p>
+                        <p>
+                            {{ form.junaeb }}{{ form.junaeb.label_tag }}
+                            {{ form.junaeb.errors }}
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class='input-field col s12'>
+                        <p>Cambiar foto:</p>
+                        {{ form.foto }}
+                        {{ form.foto.errors }}
+                    </div>
+                </div>
+
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        {{ form.password.errors }}
+                        {{ form.password }}
+                        <label style="text-align: center" for='password'>Ingresa tu contraseña</label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <button type='submit' form="form1" value="editar"
+                            class='col s6 offset-s3 btn btn-large waves-effect teal'>
+                        Editar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+{% endblock %}
