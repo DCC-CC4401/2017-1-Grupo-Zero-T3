@@ -16,6 +16,11 @@ def index(request):
 
 
 def logout_view(request):
+    if request.user.usuario.tipo == 3:
+        if VendedorAmbulante.objects.filter(vendedor=Vendedor.objects.get(user=request.user.usuario)).exists():
+            ambulante_actual = VendedorAmbulante.objects.get(vendedor=Vendedor.objects.get(user=request.user.usuario))
+            ambulante_actual.activo = False
+            ambulante_actual.save()
     logout(request)
     return render(request, "app/index.html")
 
