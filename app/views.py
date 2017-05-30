@@ -61,9 +61,25 @@ def gestionproductos(request, id):
     context["id"] = id
     return render(request, "app/gestion-productos.html", context)
 
+def addfav(request, id_add):
+    q = Favorito(alumno=request.user.usuario, vendedor=Vendedor.objects.get(id=id_add))
+    q.save()
+    return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id_add))
+
+def deletefav(request, id_delete):
+    q = Favorito.objects.filter(alumno=request.user.usuario,
+                                vendedor=Vendedor.objects.get(id=id_delete))
+    q.delete()
+    return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id_delete))
 
 def vendedorprofilepage(request, id):
     context = context_vendedor(id)
+    if request.user.is_authenticated:
+        if request.user.usuario.tipo == 2:
+            context['favorite'] = Favorito.objects.filter(alumno=request.user.usuario,
+                                                             vendedor=Vendedor.objects.get(id=context["id"])).exists()
+    else:
+        context['favorite'] = False
     return render(request, "app/vendedor-profile-page.html", context)
 
 

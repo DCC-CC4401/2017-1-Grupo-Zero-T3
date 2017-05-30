@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^editarvendedor/', views.editarvendedor, name='editarvendedor'),
     url(r'^editarproducto/(?P<id>[0-9]+)$', views.editarproducto, name='editarproducto'),
     url(r'^borrarproducto/(?P<id>[0-9]+)$', views.borrarproducto, name='borrarproducto'),
+    url(r'^deletefav/(?P<id_delete>[0-9]+)$', views.deletefav, name='deletefav'),
+    url(r'^addfav/(?P<id_add>[0-9]+)$', views.addfav, name='addfav'),
     url(r'^$', views.index, name='index'),
 ]

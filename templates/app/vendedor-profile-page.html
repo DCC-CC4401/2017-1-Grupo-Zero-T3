@@ -60,12 +60,18 @@
                             <div class="switch" style="margin-left: 10px;">
                                 <label>
                                     <h4 class="card-title grey-text flow-text text-darken-4">Favorito</h4>
-                                    <!--<input type="checkbox"><span class="lever"></span> -->
                                     <i class="material-icons amber-text">grade</i>
                                     <span class=" grey-text flow-text text-darken-4"
                                           style="font-size:24px; line-height:35px;">{{ fav }}</span>
                                 </label>
                             </div>
+                        {% if request.user.usuario.tipo == 2 %}
+                            {% if favorite %}
+                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'deletefav' id %}"> Quitar </a>
+                            {% else %}
+                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'addfav' id %}"> Agregar </a>
+                            {% endif %}
+                        {% endif %}
                         </div>
                     </div>
 
@@ -107,11 +113,17 @@
                             <h4 class="card-title grey-text flow-text text-darken-4"
                                 style="font-size: 1.3rem;">
                                 Favorito</h4>
-                            <!--<input type="checkbox"><span class="lever"></span>-->
                             <h6 class="center"><i class="material-icons amber-text">grade</i>
                                 <span class=" grey-text flow-text text-darken-4"
                                       style="font-size:22px; line-height:25px;">{{ fav }}</span>
                             </h6>
+                        {% if request.user.usuario.tipo == 2 %}
+                            {% if favorite %}
+                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'deletefav' id %}"> Quitar </a>
+                            {% else %}
+                                <a class="col s12 btn btn-small waves-effect teal" href="{% url 'addfav' id %}"> Agregar </a>
+                            {% endif %}
+                        {% endif %}
                         </div>
 
                         <div class="col s5 offset-s1 center">
