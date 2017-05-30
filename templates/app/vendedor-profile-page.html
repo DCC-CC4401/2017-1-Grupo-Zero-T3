@@ -173,6 +173,7 @@
                                         </span>
 
                                         <p><a class="teal-text">${{ producto.precio }}</a></p>
+                                        <p><a class="black-text">Unidades: {{ producto.stock }} </a></p>
 
                                         <div id="modal{{ producto.id }}" class="modal">
                                             <div class="modal-content">
@@ -195,6 +196,12 @@
                                                             <i class="material-icons">mode_edit</i>
                                                         </a>
                                                     </div>
+                                                    <div class="col l2 right">
+                                                        <a class="btn-floating activator waves-effect waves-light darken-2"
+                                                           href="{% url "venderproducto" producto.id %}">
+                                                            <i class="material-icons">shopping_cart</i>
+                                                        </a>
+                                                    </div>
                                                 {% endif %}
                                             {% endif %}
 
@@ -202,11 +209,11 @@
                                     </div>
 
 
-                                    <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">
-                                        {{ producto.nombre|capfirst }}
-                                        <i class="material-icons right">close</i>
-                                    </span>
+                                        <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">
+                                            {{ producto.nombre|capfirst }}
+                                            <i class="material-icons right">close</i>
+                                        </span>
 
                                         <ul>
                                             <li>Precio: <a
