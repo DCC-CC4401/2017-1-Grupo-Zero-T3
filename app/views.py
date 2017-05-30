@@ -40,17 +40,14 @@ def login_view(request):
             context = dict()
             user = Usuario.objects.get(user=user)
             tipo = user.tipo
-            if (tipo == 2):
+            if (tipo <= 2):
                 return render(request, "app/index.html")
             if (tipo == 3):
                 context["id"] = Vendedor.objects.get(user=user).id
                 return HttpResponseRedirect("/app/vendedorprofilepage/" + str(context["id"]), context)
-        else:
-            form = LoginForm()
-            return render(request, "app/login.html", {'form': form})
-    else:
-        form = LoginForm()
-        return render(request, 'app/login.html', {'form': form})
+
+    form = LoginForm()
+    return render(request, "app/login.html", {'form': form})
 
 
 def signup(request):
@@ -192,6 +189,8 @@ def registrarFijo(request):
                                         ubicacion='')
             vendedorfijo.save()
             # redirect to a new URL:
+            user = authenticate(request, username=nombre, password=contrasena)
+            login(request, user)
             context = context_vendedor(vendedor.id)
             return HttpResponseRedirect("/app/vendedorprofilepage/" + str(context["id"]), context)
 
