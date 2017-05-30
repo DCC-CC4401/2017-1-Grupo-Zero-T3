@@ -66,6 +66,21 @@ def gestionproductos(request, id):
     context["id"] = id
     return render(request, "app/gestion-productos.html", context)
 
+
+def checkin(request, id_amb):
+    q = VendedorAmbulante.objects.get(vendedor=Vendedor.objects.get(id=id_amb))
+    q.activo = True
+    q.save()
+    return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id_amb))
+
+
+def checkout(request, id_amb):
+    q = VendedorAmbulante.objects.get(vendedor=Vendedor.objects.get(id=id_amb))
+    q.activo = False
+    q.save()
+    return HttpResponseRedirect("/app/vendedorprofilepage/" + str(id_amb))
+
+
 def addfav(request, id_add):
     q = Favorito(alumno=request.user.usuario, vendedor=Vendedor.objects.get(id=id_add))
     q.save()
@@ -83,6 +98,18 @@ def vendedorprofilepage(request, id):
         if request.user.usuario.tipo == 2:
             context['favorite'] = Favorito.objects.filter(alumno=request.user.usuario,
                                                              vendedor=Vendedor.objects.get(id=context["id"])).exists()
+        elif request.user.usuario.tipo == 3:
+            ambulante =  VendedorAmbulante.objects.filter(vendedor=Vendedor.objects.get(user=request.user.usuario))
+            if ambulante.exists():
+                context['ambulante'] = True
+                context['ambul_activo'] = ambulante.first().activo
+            else:
+                context['ambulante'] = False
+                context['ambul_activo'] = False
+        else:
+            context['favorite'] = False
+            context['ambulante'] = False
+            context['ambul_activo'] = False
     else:
         context['favorite'] = False
     return render(request, "app/vendedor-profile-page.html", context)

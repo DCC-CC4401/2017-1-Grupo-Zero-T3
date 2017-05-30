@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^borrarproducto/(?P<id>[0-9]+)$', views.borrarproducto, name='borrarproducto'),
     url(r'^deletefav/(?P<id_delete>[0-9]+)$', views.deletefav, name='deletefav'),
     url(r'^addfav/(?P<id_add>[0-9]+)$', views.addfav, name='addfav'),
+    url(r'^checkin/(?P<id_amb>[0-9]+)$', views.checkin, name='checkin'),
+    url(r'^checkout/(?P<id_amb>[0-9]+)$', views.checkout, name='checkout'),
     url(r'^$', views.index, name='index'),
 ]
