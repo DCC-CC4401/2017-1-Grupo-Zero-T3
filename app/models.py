@@ -80,7 +80,7 @@ class VendedorFijo(models.Model):
 
 
 class Producto(models.Model):
-    vendedor = models.ForeignKey(Vendedor)
+    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
 
     foto = models.ImageField(upload_to='media', default="img/bread", blank=True)
 
@@ -112,3 +112,15 @@ class Favorito(models.Model):
 
     def __str__(self):
         return self.alumno.user.username + " " + self.vendedor.user.username
+
+
+class Venta(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    precio = models.IntegerField()
+    fecha = models.DateTimeField()
+
+    class Meta:
+        ordering = ["fecha", "producto"]
+
+    def __str__(self):
+        return self.fecha.strftime("%Y-%m-%d %H:%M:%S") + " " + self.producto.nombre
