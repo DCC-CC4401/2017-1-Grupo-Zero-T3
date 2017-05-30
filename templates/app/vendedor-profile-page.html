@@ -50,13 +50,13 @@
                             {% if request.user.usuario.vendedor.id|slugify == id %}
                             {% if ambulante %}
                             {% if ambul_activo %}
-                                <p></p>
+                                <p> &zwnj;</p>
                                 <a class="btn btn-small waves-effect teal" href="{% url 'checkout' id %}"> Check-Out </a><br>
-                                <p></p>
                                 <p class="medium-small flow-text light-gray-text" style="font-size:80%;">(Aprete para mostrarse no disponible)<p>
                             {% else %}
+                                <p> &zwnj;</p>
                                 <a class="btn btn-small waves-effect teal" href="{% url 'checkin' id %}"> Check-In </a><br>
-                                <p class="medium-small flow-text light-gray-text">(Aprete para mostrarse disponible)</p>
+                                <p class="medium-small flow-text light-gray-text" style="font-size:80%;">(Aprete para mostrarse disponible)</p>
                             {% endif %}
                             {% endif %}
                             {% endif %}
@@ -128,13 +128,13 @@
                             {% if request.user.usuario.vendedor.id|slugify == id %}
                             {% if ambulante %}
                             {% if ambul_activo %}
-                                <p></p>
+                                <p> &zwnj;</p>
                                 <a class="btn btn-small waves-effect teal" href="{% url 'checkout' id %}"> Check-Out </a><br>
-                                <p></p>
                                 <p class="medium-small flow-text light-gray-text" style="font-size:80%;">(Aprete para mostrarse no disponible)<p>
                             {% else %}
+                                <p> &zwnj;</p>
                                 <a class="btn btn-small waves-effect teal" href="{% url 'checkin' id %}"> Check-In </a><br>
-                                <p class="medium-small flow-text light-gray-text">(Aprete para mostrarse disponible)</p>
+                                <p class="medium-small flow-text light-gray-text" style="font-size:80%;">(Aprete para mostrarse disponible)</p>
                             {% endif %}
                             {% endif %}
                             {% endif %}
